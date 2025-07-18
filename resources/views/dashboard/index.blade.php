@@ -1,5 +1,5 @@
 <x-app-layout :title="$title">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 mx-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 mx-2 mt-2">
         <!-- Total Assessment This Week Card -->
         <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
             <div class="flex items-center">

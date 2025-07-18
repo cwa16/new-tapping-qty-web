@@ -9,7 +9,7 @@ class TreeAssessmentController extends Controller
     public function index()
     {
         return view('assessments.index', [
-            'title' => 'Tree Assessments'
+            'title' => 'Assessments List'
         ]);
     }
 }
