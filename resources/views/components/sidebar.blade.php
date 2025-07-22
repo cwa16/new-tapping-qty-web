@@ -17,7 +17,7 @@
             </a>
         </li>
         <li>
-            <a href="" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
+            <a href="{{ route('assessment-details.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
                 <i class="ri-line-chart-line mr-2 text-lg"></i>
                 Summary Assessments
             </a>

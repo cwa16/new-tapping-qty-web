@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssessmentDetailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TreeAssessmentController;
@@ -12,3 +13,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 Route::get('/assessments', [TreeAssessmentController::class, 'index'])
     ->name('assessments.index');
+Route::get('/assessment-details', [AssessmentDetailController::class, 'index'])
+    ->name('assessment-details.index');
