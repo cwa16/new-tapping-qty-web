@@ -23,6 +23,19 @@
             </a>
         </li>
 
+        <!-- Data Master Section -->
+        <li class="mt-4">
+            <div class="px-4 py-0">
+                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Data Master</h3>
+            </div>
+        </li>
+        <li>
+            <a href="{{ route('master-blok.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
+                <i class="ri-layout-masonry-line mr-2 text-lg"></i>
+                Master Blok
+            </a>
+        </li>
+
     </ul>
     
     <!-- User Profile Menu -->

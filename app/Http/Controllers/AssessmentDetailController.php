@@ -9,89 +9,103 @@ class AssessmentDetailController extends Controller
 {
     public function index()
     {
-        $class1 = DB::table('assessments')
-            ->select('kemandoran', 'panel_sadap', DB::raw('COUNT(*) AS penyadap'))
-            ->where('nilai', '>=', 0)
-            ->where('nilai', '<=', 10.9)
-            ->groupBy('kemandoran', 'panel_sadap')
-            ->get();
-        $class2 = DB::table('assessments')
-            ->select('kemandoran', 'panel_sadap', DB::raw('COUNT(*) AS penyadap'))
-            ->where('nilai', '>', 10.9)
-            ->where('nilai', '<=', 20.9)
-            ->groupBy('kemandoran', 'panel_sadap')
-            ->get();
-        $class3 = DB::table('assessments')
-            ->select('kemandoran', 'panel_sadap', DB::raw('COUNT(*) AS penyadap'))
-            ->where('nilai', '>', 20.9)
-            ->where('nilai', '<=', 26.9)
-            ->groupBy('kemandoran', 'panel_sadap')
-            ->get();
-        $class4 = DB::table('assessments')
-            ->select('kemandoran', 'panel_sadap', DB::raw('COUNT(*) AS penyadap'))
-            ->where('nilai', '>', 26.9)
-            ->where('nilai', '<=', 32.9)
-            ->groupBy('kemandoran', 'panel_sadap')
-            ->get();
-        $noClass = DB::table('assessments')
-            ->select('kemandoran', 'panel_sadap', DB::raw('COUNT(*) AS penyadap'))
-            ->where('nilai', '>', 32.9)
-            ->groupBy('kemandoran', 'panel_sadap')
-            ->get();
-
-        // dd($class1, $class2, $class3, $class4, $noClass);
-
-        // Group all data by kemandoran and panel_sadap for easier display
+        // Get all assessment data grouped by kemandoran, panel_sadap, and individual kelas values
         $summaryByKemandoranPanel = [];
 
-        // Process each class data
-        foreach ($class1 as $item) {
+        // Get data for kelas perawan (1, 2, 3, 4, NC)
+        $kelasPerawanData = DB::table('assessments')
+            ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_perawan', DB::raw('COUNT(*) AS penyadap'))
+            ->whereNotNull('kelas_perawan')
+            ->where('kelas_perawan', '!=', '')
+            ->groupBy('kemandoran', 'panel_sadap', 'dept', 'kelas_perawan')
+            ->get();
+
+        // Get data for kelas pulihan (1, 2, 3, 4, NC)
+        $kelasPulihanData = DB::table('assessments')
+            ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_pulihan', DB::raw('COUNT(*) AS penyadap'))
+            ->whereNotNull('kelas_pulihan')
+            ->where('kelas_pulihan', '!=', '')
+            ->groupBy('kemandoran', 'panel_sadap', 'dept', 'kelas_pulihan')
+            ->get();
+
+        // Get data for kelas nta (1, 2, 3, 4, NC)
+        $kelasNtaData = DB::table('assessments')
+            ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_nta', DB::raw('COUNT(*) AS penyadap'))
+            ->whereNotNull('kelas_nta')
+            ->where('kelas_nta', '!=', '')
+            ->groupBy('kemandoran', 'panel_sadap', 'dept', 'kelas_nta')
+            ->get();
+
+        // Process kelas perawan data - group by individual kelas values
+        foreach ($kelasPerawanData as $item) {
             $key = $item->kemandoran . ' - ' . $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['class_1'] = $item->penyadap;
+            $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
+
+            // Store as "perawan_1", "perawan_2", etc.
+            $kelasKey = 'perawan_' . $item->kelas_perawan;
+            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
         }
 
-        foreach ($class2 as $item) {
+        // Process kelas pulihan data - group by individual kelas values
+        foreach ($kelasPulihanData as $item) {
             $key = $item->kemandoran . ' - ' . $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['class_2'] = $item->penyadap;
+            $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
+
+            // Store as "pulihan_1", "pulihan_2", etc.
+            $kelasKey = 'pulihan_' . $item->kelas_pulihan;
+            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
         }
 
-        foreach ($class3 as $item) {
+        // Process kelas nta data - group by individual kelas values
+        foreach ($kelasNtaData as $item) {
             $key = $item->kemandoran . ' - ' . $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['class_3'] = $item->penyadap;
+            $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
+
+            // Store as "nta_1", "nta_2", etc.
+            $kelasKey = 'nta_' . $item->kelas_nta;
+            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
         }
 
-        foreach ($class4 as $item) {
-            $key = $item->kemandoran . ' - ' . $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
-            $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['class_4'] = $item->penyadap;
-        }
-
-        foreach ($noClass as $item) {
-            $key = $item->kemandoran . ' - ' . $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
-            $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['no_class'] = $item->penyadap;
-        }
-
-        // Fill missing values with 0 and calculate totals
+        // Calculate totals for each kemandoran-panel combination
         foreach ($summaryByKemandoranPanel as $key => &$data) {
-            $data['class_1'] = $data['class_1'] ?? 0;
-            $data['class_2'] = $data['class_2'] ?? 0;
-            $data['class_3'] = $data['class_3'] ?? 0;
-            $data['class_4'] = $data['class_4'] ?? 0;
-            $data['no_class'] = $data['no_class'] ?? 0;
-            $data['total'] = $data['class_1'] + $data['class_2'] + $data['class_3'] + $data['class_4'] + $data['no_class'];
+            $data['grand_total'] = 0;
+
+            // Sum all individual kelas counts
+            foreach (
+                [
+                    'perawan_1',
+                    'perawan_2',
+                    'perawan_3',
+                    'perawan_4',
+                    'perawan_NC',
+                    'pulihan_1',
+                    'pulihan_2',
+                    'pulihan_3',
+                    'pulihan_4',
+                    'pulihan_NC',
+                    'nta_1',
+                    'nta_2',
+                    'nta_3',
+                    'nta_4',
+                    'nta_NC'
+                ] as $kelasKey
+            ) {
+                if (isset($data[$kelasKey])) {
+                    $data['grand_total'] += $data[$kelasKey];
+                }
+            }
         }
 
         // Sort by kemandoran then by panel_sadap
         ksort($summaryByKemandoranPanel);
+
+        // Uncomment the line below to see the data structure
         // dd($summaryByKemandoranPanel);
 
         $departments = DB::table('assessments')
@@ -121,11 +135,9 @@ class AssessmentDetailController extends Controller
         return view('assessment-details.index', [
             'title' => 'Assessment Details',
             'summaryByKemandoranPanel' => $summaryByKemandoranPanel,
-            'class1' => $class1,
-            'class2' => $class2,
-            'class3' => $class3,
-            'class4' => $class4,
-            'noClass' => $noClass,
+            'kelasPerawanData' => $kelasPerawanData,
+            'kelasPulihanData' => $kelasPulihanData,
+            'kelasNtaData' => $kelasNtaData,
             'departments' => $departments,
             'bloks' => $bloks,
             'kemandoran' => $kemandoran,

@@ -34,74 +34,151 @@
                 </button>
             </form>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto mt-2">
             <table class="w-full bg-white rounded-lg shadow">
                 <thead>
+                    <tr class="bg-blue-500 text-white border border-gray-200">
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" rowspan="2">No</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" rowspan="2">Dept</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" rowspan="2">Kemandoran</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" rowspan="2">Panel Sadap</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" colspan="5">Kelas Perawan</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" colspan="5">Kelas Pulihan</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" colspan="5">Kelas NTA</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium border border-gray-200" rowspan="2">Total</th>
+                    </tr>
                     <tr class="bg-blue-500 text-white">
-                        <th class="px-4 py-3 text-left text-sm font-medium">Kemandoran</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium">Panel Sadap</th>
-                        <th class="px-4 py-3 text-center text-sm font-medium">
-                            <span data-tippy-content="Score: 0 - 10.9">Class 1</span>
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-medium">
-                            <span data-tippy-content="Score: 11 - 20.9">Class 2</span>
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-medium">
-                            <span data-tippy-content="Score: 21 - 26.9">Class 3</span>
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-medium">
-                            <span data-tippy-content="Score: 27 - 32.9">Class 4</span>
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-medium">
-                            <span data-tippy-content="Score: > 33">No Class</span>
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-medium bg-blue-600">Total</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
+                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
+                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
+                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($summaryByKemandoranPanel as $key => $data)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="px-4 py-3 font-medium text-gray-900">{{ $data['kemandoran'] }}</td>
-                            <td class="px-4 py-3 text-gray-700">{{ $data['panel_sadap'] }}</td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-4 py-3 text-center font-medium text-gray-900 border border-gray-200">{{ $loop->iteration }}</td>
+                            <td class="px-4 py-3 text-center text-gray-700 border border-gray-200">{{ $data['dept'] ?? '-' }}</td>
+                            <td class="px-4 py-3 text-center font-medium text-gray-900 border border-gray-200">{{ $data['kemandoran'] }}</td>
+                            <td class="px-4 py-3 text-center text-gray-700 border border-gray-200">{{ $data['panel_sadap'] }}</td>
+                            
+                            <!-- Kelas Perawan (1-4, NC) -->
+                            <td class="px-4 py-3 text-center border border-gray-200">
                                 <span class="px-2 py-1 text-sm rounded-full 
-                                    {{ $data['class_1'] > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
-                                    {{ $data['class_1'] }}
+                                    {{ (isset($data['perawan_1']) && $data['perawan_1'] > 0) ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['perawan_1'] ?? 0 }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-4 py-3 text-center border border-gray-200">
                                 <span class="px-2 py-1 text-sm rounded-full 
-                                    {{ $data['class_2'] > 0 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500' }}">
-                                    {{ $data['class_2'] }}
+                                    {{ (isset($data['perawan_2']) && $data['perawan_2'] > 0) ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['perawan_2'] ?? 0 }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-4 py-3 text-center border border-gray-200">
                                 <span class="px-2 py-1 text-sm rounded-full 
-                                    {{ $data['class_3'] > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500' }}">
-                                    {{ $data['class_3'] }}
+                                    {{ (isset($data['perawan_3']) && $data['perawan_3'] > 0) ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['perawan_3'] ?? 0 }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-4 py-3 text-center border border-gray-200">
                                 <span class="px-2 py-1 text-sm rounded-full 
-                                    {{ $data['class_4'] > 0 ? 'bg-orange-100 text-orange-800' : 'bg-gray-100 text-gray-500' }}">
-                                    {{ $data['class_4'] }}
+                                    {{ (isset($data['perawan_4']) && $data['perawan_4'] > 0) ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['perawan_4'] ?? 0 }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-2 py-3 text-center border border-gray-200">
                                 <span class="px-2 py-1 text-sm rounded-full 
-                                    {{ $data['no_class'] > 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500' }}">
-                                    {{ $data['no_class'] }}
+                                    {{ (isset($data['perawan_NC']) && $data['perawan_NC'] > 0) ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['perawan_NC'] ?? 0 }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-center bg-blue-50">
+                            
+                            <!-- Kelas Pulihan (1-4, NC) -->
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['pulihan_1']) && $data['pulihan_1'] > 0) ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['pulihan_1'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['pulihan_2']) && $data['pulihan_2'] > 0) ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['pulihan_2'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['pulihan_3']) && $data['pulihan_3'] > 0) ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['pulihan_3'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['pulihan_4']) && $data['pulihan_4'] > 0) ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['pulihan_4'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-2 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['pulihan_NC']) && $data['pulihan_NC'] > 0) ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['pulihan_NC'] ?? 0 }}
+                                </span>
+                            </td>
+                            
+                            <!-- Kelas NTA (1-4, NC) -->
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['nta_1']) && $data['nta_1'] > 0) ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['nta_1'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['nta_2']) && $data['nta_2'] > 0) ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['nta_2'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['nta_3']) && $data['nta_3'] > 0) ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['nta_3'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['nta_4']) && $data['nta_4'] > 0) ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['nta_4'] ?? 0 }}
+                                </span>
+                            </td>
+                            <td class="px-2 py-3 text-center border border-gray-200">
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{ (isset($data['nta_NC']) && $data['nta_NC'] > 0) ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500' }}">
+                                    {{ $data['nta_NC'] ?? 0 }}
+                                </span>
+                            </td>
+                            
+                            <!-- Total -->
+                            <td class="px-4 py-3 text-center bg-blue-50 border border-gray-200">
                                 <span class="px-3 py-1 text-sm font-semibold rounded-full bg-blue-200 text-blue-900">
-                                    {{ $data['total'] }}
+                                    {{ $data['grand_total'] }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                            <td colspan="20" class="px-4 py-8 text-center text-gray-500">
                                 <i class="ri-inbox-line text-4xl mb-2"></i>
                                 <p>No assessment data available</p>
                             </td>
@@ -111,26 +188,67 @@
                 
                 <!-- Summary Row -->
                 @if(count($summaryByKemandoranPanel) > 0)
+                    @php
+                        $totals = [
+                            'perawan' => ['1' => 0, '2' => 0, '3' => 0, '4' => 0, 'NC' => 0],
+                            'pulihan' => ['1' => 0, '2' => 0, '3' => 0, '4' => 0, 'NC' => 0],
+                            'nta' => ['1' => 0, '2' => 0, '3' => 0, '4' => 0, 'NC' => 0],
+                            'grand_total' => 0
+                        ];
+                        
+                        foreach($summaryByKemandoranPanel as $data) {
+                            // Kelas Perawan totals - using flat structure
+                            $totals['perawan']['1'] += $data['perawan_1'] ?? 0;
+                            $totals['perawan']['2'] += $data['perawan_2'] ?? 0;
+                            $totals['perawan']['3'] += $data['perawan_3'] ?? 0;
+                            $totals['perawan']['4'] += $data['perawan_4'] ?? 0;
+                            $totals['perawan']['NC'] += $data['perawan_NC'] ?? 0;
+                            
+                            // Kelas Pulihan totals - using flat structure
+                            $totals['pulihan']['1'] += $data['pulihan_1'] ?? 0;
+                            $totals['pulihan']['2'] += $data['pulihan_2'] ?? 0;
+                            $totals['pulihan']['3'] += $data['pulihan_3'] ?? 0;
+                            $totals['pulihan']['4'] += $data['pulihan_4'] ?? 0;
+                            $totals['pulihan']['NC'] += $data['pulihan_NC'] ?? 0;
+                            
+                            // Kelas NTA totals - using flat structure
+                            $totals['nta']['1'] += $data['nta_1'] ?? 0;
+                            $totals['nta']['2'] += $data['nta_2'] ?? 0;
+                            $totals['nta']['3'] += $data['nta_3'] ?? 0;
+                            $totals['nta']['4'] += $data['nta_4'] ?? 0;
+                            $totals['nta']['NC'] += $data['nta_NC'] ?? 0;
+                            
+                            $totals['grand_total'] += $data['grand_total'];
+                        }
+                    @endphp
                     <tfoot>
                         <tr class="bg-gray-100 font-semibold">
-                            <td colspan="2" class="px-4 py-3 text-gray-900">TOTAL</td>
-                            <td class="px-4 py-3 text-center">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'class_1')) }}
-                            </td>
-                            <td class="px-4 py-3 text-center">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'class_2')) }}
-                            </td>
-                            <td class="px-4 py-3 text-center">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'class_3')) }}
-                            </td>
-                            <td class="px-4 py-3 text-center">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'class_4')) }}
-                            </td>
-                            <td class="px-4 py-3 text-center">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'no_class')) }}
-                            </td>
-                            <td class="px-4 py-3 text-center bg-blue-100 font-bold">
-                                {{ array_sum(array_column($summaryByKemandoranPanel, 'total')) }}
+                            <td colspan="4" class="px-4 py-3 text-center text-gray-900 border border-gray-200">TOTAL</td>
+                            
+                            <!-- Kelas Perawan Totals -->
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['perawan']['1'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['perawan']['2'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['perawan']['3'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['perawan']['4'] }}</td>
+                            <td class="px-2 py-3 text-center border border-gray-200">{{ $totals['perawan']['NC'] }}</td>
+                            
+                            <!-- Kelas Pulihan Totals -->
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['pulihan']['1'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['pulihan']['2'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['pulihan']['3'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['pulihan']['4'] }}</td>
+                            <td class="px-2 py-3 text-center border border-gray-200">{{ $totals['pulihan']['NC'] }}</td>
+                            
+                            <!-- Kelas NTA Totals -->
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['nta']['1'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['nta']['2'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['nta']['3'] }}</td>
+                            <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['nta']['4'] }}</td>
+                            <td class="px-2 py-3 text-center border border-gray-200">{{ $totals['nta']['NC'] }}</td>
+                            
+                            <!-- Grand Total -->
+                            <td class="px-4 py-3 text-center bg-blue-100 font-bold border border-gray-200">
+                                {{ $totals['grand_total'] }}
                             </td>
                         </tr>
                     </tfoot>
