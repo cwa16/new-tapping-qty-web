@@ -18,8 +18,14 @@
         </li>
         <li>
             <a href="{{ route('assessment-details.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
-                <i class="ri-line-chart-line mr-2 text-lg"></i>
+                <i class="ri-database-line mr-2 text-lg"></i>
                 Summary Assessments
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('grafik-asesmen.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
+                <i class="ri-line-chart-line mr-2 text-lg"></i>
+                Grafik Asesmen
             </a>
         </li>
 
@@ -32,7 +38,7 @@
         <li>
             <a href="{{ route('master-blok.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
                 <i class="ri-layout-masonry-line mr-2 text-lg"></i>
-                Master Blok
+                Master Block
             </a>
         </li>
 

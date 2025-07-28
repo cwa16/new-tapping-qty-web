@@ -7,13 +7,32 @@ use Illuminate\Support\Facades\DB;
 
 class AssessmentDetailController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get filter values
+        $filters = $request->only(['kemandoran', 'panel_sadap', 'dept']);
+
         // Get all assessment data grouped by kemandoran, panel_sadap, and individual kelas values
         $summaryByKemandoranPanel = [];
 
+        // Build base query with filters
+        $baseQuery = DB::table('assessments');
+
+        // Apply filters if provided
+        if (!empty($filters['kemandoran'])) {
+            $baseQuery->where('kemandoran', 'LIKE', '%' . $filters['kemandoran'] . '%');
+        }
+
+        if (!empty($filters['panel_sadap'])) {
+            $baseQuery->where('panel_sadap', $filters['panel_sadap']);
+        }
+
+        if (!empty($filters['dept'])) {
+            $baseQuery->where('dept', $filters['dept']);
+        }
+
         // Get data for kelas perawan (1, 2, 3, 4, NC)
-        $kelasPerawanData = DB::table('assessments')
+        $kelasPerawanData = (clone $baseQuery)
             ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_perawan', DB::raw('COUNT(*) AS penyadap'))
             ->whereNotNull('kelas_perawan')
             ->where('kelas_perawan', '!=', '')
@@ -21,7 +40,7 @@ class AssessmentDetailController extends Controller
             ->get();
 
         // Get data for kelas pulihan (1, 2, 3, 4, NC)
-        $kelasPulihanData = DB::table('assessments')
+        $kelasPulihanData = (clone $baseQuery)
             ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_pulihan', DB::raw('COUNT(*) AS penyadap'))
             ->whereNotNull('kelas_pulihan')
             ->where('kelas_pulihan', '!=', '')
@@ -29,7 +48,7 @@ class AssessmentDetailController extends Controller
             ->get();
 
         // Get data for kelas nta (1, 2, 3, 4, NC)
-        $kelasNtaData = DB::table('assessments')
+        $kelasNtaData = (clone $baseQuery)
             ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_nta', DB::raw('COUNT(*) AS penyadap'))
             ->whereNotNull('kelas_nta')
             ->where('kelas_nta', '!=', '')
@@ -38,38 +57,47 @@ class AssessmentDetailController extends Controller
 
         // Process kelas perawan data - group by individual kelas values
         foreach ($kelasPerawanData as $item) {
-            $key = $item->kemandoran . ' - ' . $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
+            // Normalize case only for kemandoran, keep panel_sadap as-is
+            $normalizedKemandoran = trim(ucwords(strtolower($item->kemandoran)));
+
+            $key = $normalizedKemandoran . ' - ' . $item->panel_sadap;
+            $summaryByKemandoranPanel[$key]['kemandoran'] = $normalizedKemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
 
             // Store as "perawan_1", "perawan_2", etc.
             $kelasKey = 'perawan_' . $item->kelas_perawan;
-            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
+            $summaryByKemandoranPanel[$key][$kelasKey] = ($summaryByKemandoranPanel[$key][$kelasKey] ?? 0) + $item->penyadap;
         }
 
         // Process kelas pulihan data - group by individual kelas values
         foreach ($kelasPulihanData as $item) {
-            $key = $item->kemandoran . ' - ' . $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
+            // Normalize case only for kemandoran, keep panel_sadap as-is
+            $normalizedKemandoran = trim(ucwords(strtolower($item->kemandoran)));
+
+            $key = $normalizedKemandoran . ' - ' . $item->panel_sadap;
+            $summaryByKemandoranPanel[$key]['kemandoran'] = $normalizedKemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
 
             // Store as "pulihan_1", "pulihan_2", etc.
             $kelasKey = 'pulihan_' . $item->kelas_pulihan;
-            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
+            $summaryByKemandoranPanel[$key][$kelasKey] = ($summaryByKemandoranPanel[$key][$kelasKey] ?? 0) + $item->penyadap;
         }
 
         // Process kelas nta data - group by individual kelas values
         foreach ($kelasNtaData as $item) {
-            $key = $item->kemandoran . ' - ' . $item->panel_sadap;
-            $summaryByKemandoranPanel[$key]['kemandoran'] = $item->kemandoran;
+            // Normalize case only for kemandoran, keep panel_sadap as-is
+            $normalizedKemandoran = trim(ucwords(strtolower($item->kemandoran)));
+
+            $key = $normalizedKemandoran . ' - ' . $item->panel_sadap;
+            $summaryByKemandoranPanel[$key]['kemandoran'] = $normalizedKemandoran;
             $summaryByKemandoranPanel[$key]['panel_sadap'] = $item->panel_sadap;
             $summaryByKemandoranPanel[$key]['dept'] = $item->dept;
 
             // Store as "nta_1", "nta_2", etc.
             $kelasKey = 'nta_' . $item->kelas_nta;
-            $summaryByKemandoranPanel[$key][$kelasKey] = $item->penyadap;
+            $summaryByKemandoranPanel[$key][$kelasKey] = ($summaryByKemandoranPanel[$key][$kelasKey] ?? 0) + $item->penyadap;
         }
 
         // Calculate totals for each kemandoran-panel combination
@@ -142,7 +170,49 @@ class AssessmentDetailController extends Controller
             'bloks' => $bloks,
             'kemandoran' => $kemandoran,
             'panelSadap' => $panelSadap,
-            'filters' => request()->only(['search', 'department', 'blok', 'kemandoran'])
+            'filters' => $filters
+        ]);
+    }
+
+    public function detail(Request $request)
+    {
+        $kemandoran = $request->get('kemandoran');
+        $panelSadap = $request->get('panel_sadap');
+        $kelasType = $request->get('kelas_type'); // perawan, pulihan, nta
+        $kelasValue = $request->get('kelas_value'); // 1, 2, 3, 4, NC
+
+        // Normalize kemandoran for consistent filtering
+        $normalizedKemandoran = trim(ucwords(strtolower($kemandoran)));
+
+        // Build the query based on kelas type
+        $query = DB::table('assessments')
+            ->where('kemandoran', 'LIKE', '%' . $kemandoran . '%')
+            ->where('panel_sadap', $panelSadap);
+
+        // Add the specific kelas filter
+        switch ($kelasType) {
+            case 'perawan':
+                $query->where('kelas_perawan', $kelasValue);
+                break;
+            case 'pulihan':
+                $query->where('kelas_pulihan', $kelasValue);
+                break;
+            case 'nta':
+                $query->where('kelas_nta', $kelasValue);
+                break;
+        }
+
+        $assessments = $query->get();
+        // dd($assessments);
+        // dd($kelasValue);
+
+        return view('assessment-details.detail', [
+            'title' => 'Assessment Detail - ' . ucfirst($kelasType) . ' Kelas ' . $kelasValue,
+            'assessments' => $assessments,
+            'kemandoran' => $normalizedKemandoran,
+            'panel_sadap' => $panelSadap,
+            'kelas_type' => $kelasType,
+            'kelas_value' => $kelasValue,
         ]);
     }
 }

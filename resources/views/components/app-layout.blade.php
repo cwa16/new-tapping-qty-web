@@ -19,6 +19,38 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
+<style>
+    .pagination-wrapper nav {
+        background-color: white;
+    }
+    
+    .pagination-wrapper .flex {
+        background-color: white !important;
+    }
+    
+    .pagination-wrapper span,
+    .pagination-wrapper a {
+        background-color: white !important;
+        color: #374151 !important;
+        border-color: #d1d5db !important;
+    }
+    
+    .pagination-wrapper a:hover {
+        background-color: #f3f4f6 !important;
+        color: #1f2937 !important;
+    }
+    
+    .pagination-wrapper span[aria-current="page"] {
+        background-color: #3b82f6 !important;
+        color: white !important;
+        border-color: #3b82f6 !important;
+    }
+    
+    .pagination-wrapper .text-gray-500 {
+        color: #6b7280 !important;
+    }
+</style>
+
 <body class="text-gray-800 font-inter">
     <x-sidebar></x-sidebar>
     <div class="ml-64">

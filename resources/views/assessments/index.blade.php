@@ -2,7 +2,7 @@
     <div class="mx-2 mb-2 flex items-center space-x-2 justify-between">
         <div class="items-center flex space-x-2">
             <a href="{{ route('assessments.index') }}">
-                <span class="text-xl font-bold text-gray-500 hover:text-gray-600">{{ $title }}</span>
+                <span class="text-base font-light text-gray-500 hover:text-gray-600">Data Asesmen</span>
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
         </div>
@@ -141,7 +141,7 @@
                 <tbody>
                     @foreach($assessments as $assessment)
                         <tr class="border-b border-gray-200 {{ $loop->even ? 'bg-blue-100' : 'bg-white' }}">
-                            <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="px-4 py-2">{{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2">{{ Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}</td>
                             <td class="px-4 py-2">{{ $assessment->dept }}</td>
                             <td class="px-4 py-2">{{ $assessment->nik_penyadap }}</td>
@@ -201,7 +201,7 @@
         @if($assessments->hasPages())
             <div class="mt-4 px-4">
                 <div class="pagination-wrapper">
-                    {{ $assessments->appends(request()->query())->links() }}
+                    {{ $assessments->appends(request()->query())->links('components.pagination') }}
                 </div>
             </div>
         @endif
@@ -310,38 +310,6 @@
         </div>
     </div>
 </x-app-layout>
-
-<style>
-    .pagination-wrapper nav {
-        background-color: white;
-    }
-    
-    .pagination-wrapper .flex {
-        background-color: white !important;
-    }
-    
-    .pagination-wrapper span,
-    .pagination-wrapper a {
-        background-color: white !important;
-        color: #374151 !important;
-        border-color: #d1d5db !important;
-    }
-    
-    .pagination-wrapper a:hover {
-        background-color: #f3f4f6 !important;
-        color: #1f2937 !important;
-    }
-    
-    .pagination-wrapper span[aria-current="page"] {
-        background-color: #3b82f6 !important;
-        color: white !important;
-        border-color: #3b82f6 !important;
-    }
-    
-    .pagination-wrapper .text-gray-500 {
-        color: #6b7280 !important;
-    }
-</style>
 
 <script>
     // Tippy.js tooltips
