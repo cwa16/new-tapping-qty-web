@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('trees', function (Blueprint $table) {
             $table->id();
+            $table->string('tree_identifier');
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 <x-app-layout :title="$title">
     <div class="mx-2 mb-2 flex items-center space-x-2 justify-between">
         <div class="items-center flex space-x-2">
-            <a href="{{ route('assessments.index') }}">
+            <a href="{{ route('assessment-details.index') }}">
                 <span class="text-base font-light text-gray-500 hover:text-gray-600">Summary Assessment</span>
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
@@ -9,46 +9,89 @@
     </div>
     
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
-        <div class="flex justify-end">
-            <form method="GET" action="{{ route('assessment-details.index') }}" class="flex items-center space-x-2">
-                <select name="dept" class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Departments</option>
-                    @foreach($departments as $item)
-                        <option value="{{ $item->dept }}" {{ ($filters['dept'] ?? '') == $item->dept ? 'selected' : '' }}>
-                            {{ $item->dept }}
-                        </option>
-                    @endforeach
-                </select>
-                
-                <select name="kemandoran" class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Kemandoran</option>
-                    @foreach($kemandoran as $item)
-                        <option value="{{ $item->kemandoran }}" {{ ($filters['kemandoran'] ?? '') == $item->kemandoran ? 'selected' : '' }}>
-                            {{ $item->kemandoran }}
-                        </option>
-                    @endforeach
-                </select>
-                
-                <select name="panel_sadap" class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Panel Sadap</option>
-                    @foreach($panelSadap as $item)
-                        <option value="{{ $item->panel_sadap }}" {{ ($filters['panel_sadap'] ?? '') == $item->panel_sadap ? 'selected' : '' }}>
-                            {{ $item->panel_sadap }}
-                        </option>
-                    @endforeach
-                </select>
-                
-                <button type="submit" class="px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
-                    Filter
-                </button>
-                
-                @if(!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap']))
-                    <a href="{{ route('assessment-details.index') }}" class="px-2 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200">
-                        <i class="ri-refresh-line"></i>
-                    </a>
-                @endif
+        <div class="bg-white p-2 rounded-lg mb-4 shadow-md shadow-black/10">
+            <p class="text-lg font-medium text-gray-900 my-2">Filters</p>
+            <form method="GET" action="{{ route('assessment-details.index') }}">
+                <div class="grid grid-cols-5 items-center gap-x-2">
+                    <div class="">
+                         <label class="block text-sm font-medium text-gray-700 mb-1">Dept</label>
+                        <select name="dept" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                            <option value="">All Departments</option>
+                            @foreach($departments as $item)
+                                <option value="{{ $item->dept }}" {{ ($filters['dept'] ?? '') == $item->dept ? 'selected' : '' }}>
+                                    {{ $item->dept }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kemandoran</label>
+                        <select name="kemandoran" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                            <option value="">All Kemandoran</option>
+                            @foreach($kemandoran as $item)
+                                <option value="{{ $item->kemandoran }}" {{ ($filters['kemandoran'] ?? '') == $item->kemandoran ? 'selected' : '' }}>
+                                    {{ $item->kemandoran }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Panel Sadap</label>
+                        <select name="panel_sadap" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                            <option value="">All Panel Sadap</option>
+                            @foreach($panelSadap as $item)
+                                <option value="{{ $item->panel_sadap }}" {{ ($filters['panel_sadap'] ?? '') == $item->panel_sadap ? 'selected' : '' }}>
+                                    {{ $item->panel_sadap }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Date From Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
+                        <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+    
+                    <!-- Date To Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
+                        <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="mt-2 flex gap-x-2">
+                    <button type="submit" class="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+                        Filter
+                    </button>
+                    
+                    @if(!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap']) || !empty($filters['date_from']) || !empty($filters['date_to']))
+                        <a href="{{ route('assessment-details.index') }}" class="px-3 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200">
+                            <i class="ri-refresh-line"></i>
+                        </a>
+                    @endif
+                </div>
             </form>
         </div>
+        
+        <!-- Results Summary -->
+        {{-- <div class="flex justify-between items-center mt-4 mb-2">
+            <div class="text-sm text-gray-600">
+                @if(!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap']))
+                    <i class="ri-filter-line text-blue-600"></i>
+                    <span class="font-medium">Filtered Results:</span> {{ count($summaryByKemandoranPanel) }} records
+                @else
+                    <span class="font-medium">Total Results:</span> {{ count($summaryByKemandoranPanel) }} records
+                @endif
+            </div>
+            @if(!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap']))
+                <div class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                    Totals below reflect filtered data only
+                </div>
+            @endif
+        </div> --}}
+        
         <div class="overflow-x-auto mt-2">
             <table class="w-full bg-white rounded-lg shadow">
                 <thead>
@@ -91,7 +134,7 @@
                             <!-- Kelas Perawan (1-4, NC) -->
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['perawan_1']) && $data['perawan_1'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '1']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '1', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-800 hover:bg-green-200 transition-colors cursor-pointer">
                                         {{ $data['perawan_1'] }}
                                     </a>
@@ -101,7 +144,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['perawan_2']) && $data['perawan_2'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '2']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '2', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-800 hover:bg-green-200 transition-colors cursor-pointer">
                                         {{ $data['perawan_2'] }}
                                     </a>
@@ -111,7 +154,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['perawan_3']) && $data['perawan_3'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '3']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '3', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-800 hover:bg-green-200 transition-colors cursor-pointer">
                                         {{ $data['perawan_3'] }}
                                     </a>
@@ -121,7 +164,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['perawan_4']) && $data['perawan_4'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '4']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => '4', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-800 hover:bg-green-200 transition-colors cursor-pointer">
                                         {{ $data['perawan_4'] }}
                                     </a>
@@ -131,7 +174,7 @@
                             </td>
                             <td class="px-2 py-3 text-center border border-gray-200">
                                 @if(isset($data['perawan_NC']) && $data['perawan_NC'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => 'NC']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'perawan', 'kelas_value' => 'NC', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-red-100 text-red-800 hover:bg-red-200 transition-colors cursor-pointer">
                                         {{ $data['perawan_NC'] }}
                                     </a>
@@ -143,7 +186,7 @@
                             <!-- Kelas Pulihan (1-4, NC) -->
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['pulihan_1']) && $data['pulihan_1'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '1']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '1', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer">
                                         {{ $data['pulihan_1'] }}
                                     </a>
@@ -153,7 +196,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['pulihan_2']) && $data['pulihan_2'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '2']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '2', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer">
                                         {{ $data['pulihan_2'] }}
                                     </a>
@@ -163,7 +206,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['pulihan_3']) && $data['pulihan_3'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '3']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '3', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer">
                                         {{ $data['pulihan_3'] }}
                                     </a>
@@ -173,7 +216,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['pulihan_4']) && $data['pulihan_4'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '4']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => '4', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer">
                                         {{ $data['pulihan_4'] }}
                                     </a>
@@ -183,7 +226,7 @@
                             </td>
                             <td class="px-2 py-3 text-center border border-gray-200">
                                 @if(isset($data['pulihan_NC']) && $data['pulihan_NC'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => 'NC']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'pulihan', 'kelas_value' => 'NC', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-red-100 text-red-800 hover:bg-red-200 transition-colors cursor-pointer">
                                         {{ $data['pulihan_NC'] }}
                                     </a>
@@ -195,7 +238,7 @@
                             <!-- Kelas NTA (1-4, NC) -->
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['nta_1']) && $data['nta_1'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '1']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '1', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors cursor-pointer">
                                         {{ $data['nta_1'] }}
                                     </a>
@@ -205,7 +248,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['nta_2']) && $data['nta_2'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '2']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '2', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors cursor-pointer">
                                         {{ $data['nta_2'] }}
                                     </a>
@@ -215,7 +258,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['nta_3']) && $data['nta_3'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '3']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '3', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors cursor-pointer">
                                         {{ $data['nta_3'] }}
                                     </a>
@@ -225,7 +268,7 @@
                             </td>
                             <td class="px-4 py-3 text-center border border-gray-200">
                                 @if(isset($data['nta_4']) && $data['nta_4'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '4']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => '4', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors cursor-pointer">
                                         {{ $data['nta_4'] }}
                                     </a>
@@ -235,7 +278,7 @@
                             </td>
                             <td class="px-2 py-3 text-center border border-gray-200">
                                 @if(isset($data['nta_NC']) && $data['nta_NC'] > 0)
-                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => 'NC']) }}" 
+                                    <a href="{{ route('assessment-details.detail', ['kemandoran' => $data['kemandoran'], 'panel_sadap' => $data['panel_sadap'], 'kelas_type' => 'nta', 'kelas_value' => 'NC', 'date_from' => $filters['date_from'] ?? '', 'date_to' => $filters['date_to'] ?? '']) }}" 
                                        class="px-2 py-1 text-sm rounded-full bg-red-100 text-red-800 hover:bg-red-200 transition-colors cursor-pointer">
                                         {{ $data['nta_NC'] }}
                                     </a>
@@ -261,8 +304,8 @@
                     @endforelse
                 </tbody>
                 
-                <!-- Summary Row -->
-                @if(count($summaryByKemandoranPanel) > 0)
+                <!-- Summary Row - Only show when filters are applied -->
+                @if(count($summaryByKemandoranPanel) > 0 && (!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap'])))
                     @php
                         $totals = [
                             'perawan' => ['1' => 0, '2' => 0, '3' => 0, '4' => 0, 'NC' => 0],
@@ -298,7 +341,10 @@
                     @endphp
                     <tfoot>
                         <tr class="bg-gray-100 font-semibold">
-                            <td colspan="4" class="px-4 py-3 text-center text-gray-900 border border-gray-200">TOTAL</td>
+                            <td colspan="4" class="px-4 py-3 text-center text-gray-900 border border-gray-200">
+                                <span class="text-gray-900">TOTAL</span>
+                                {{-- <i class="ri-filter-line text-blue-600 ml-1"></i> --}}
+                            </td>
                             
                             <!-- Kelas Perawan Totals -->
                             <td class="px-4 py-3 text-center border border-gray-200">{{ $totals['perawan']['1'] }}</td>

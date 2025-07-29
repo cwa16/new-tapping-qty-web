@@ -5,38 +5,39 @@
                 <span class="text-base font-light text-gray-500 hover:text-gray-600">Grafik Asesmen</span>
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
-            <span class="text-base font-light text-gray-500">Frequency Chart</span>
+            <span class="text-base font-light text-gray-500">Sum Chart</span>
         </div>
     </div>
     
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
-       <div class="flex justify-between">
-         <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">Assessment Frequency Analysis</h2>
-            <p class="text-gray-600 text-sm">Grafik menunjukkan analisis data asesmen berdasarkan frekuensi dari setiap item asesmen.</p>
-        </div>
-            <div class="p-0">
-                <a href="{{ route('grafik-asesmen.sum-chart') }}" 
+        <div class="mb-4 flex justify-between items-start">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Assessment Score Sum Analysis</h2>
+                <p class="text-gray-600 text-sm">Grafik menunjukkan analisis data asesmen berdasarkan jumlah total skor dari setiap item asesmen.</p>
+            </div>
+            <div class="flex space-x-2">
+                <a href="{{ route('grafik-asesmen.index') }}" 
                    class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors duration-200">
-                    <i class="ri-bar-chart-line mr-1"></i> Sum Chart
+                    <i class="ri-bar-chart-line mr-1"></i> Frequency Chart
                 </a>
             </div>
-       </div>
+        </div>
 
-        <!-- Filter Controls -->
+        <!-- Filters -->
         <div class="bg-white rounded-lg p-4 shadow-sm mb-6">
             <h3 class="text-lg font-medium text-gray-700 mb-4">Filters</h3>
-            <form action="{{ route('grafik-asesmen.index') }}" method="GET" class="space-y-4">
+            
+            <form method="GET" action="{{ route('grafik-asesmen.sum-chart') }}">
                 <!-- First Row - 4 filters -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <!-- Division Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Division</label>
-                        <select name="division" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select name="division" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleDeptFilter(this.value)">
                             <option value="">All Divisions</option>
-                            @foreach($divisions as $divisionNum => $depts)
-                                <option value="{{ $divisionNum }}" {{ ($filters['division'] ?? '') == $divisionNum ? 'selected' : '' }}>
-                                    Division {{ $divisionNum }} ({{ implode(', ', $depts) }})
+                            @foreach($divisions as $divisionKey => $divisionDepts)
+                                <option value="{{ $divisionKey }}" {{ ($filters['division'] ?? '') == $divisionKey ? 'selected' : '' }}>
+                                    Division {{ $divisionKey }} ({{ implode(', ', $divisionDepts) }})
                                 </option>
                             @endforeach
                         </select>
@@ -45,11 +46,11 @@
                     <!-- Department Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
-                        <select name="dept" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" {{ ($filters['division'] ?? false) ? 'disabled' : '' }}>
+                        <select name="dept" id="deptFilter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" {{ ($filters['division'] ?? false) ? 'disabled' : '' }}>
                             <option value="">All Departments</option>
-                            @foreach($departments as $dept)
-                                <option value="{{ $dept->dept }}" {{ ($filters['dept'] ?? '') == $dept->dept ? 'selected' : '' }}>
-                                    {{ $dept->dept }}
+                            @foreach($departments as $department)
+                                <option value="{{ $department->dept }}" {{ ($filters['dept'] ?? '') == $department->dept ? 'selected' : '' }}>
+                                    {{ $department->dept }}
                                 </option>
                             @endforeach
                         </select>
@@ -120,7 +121,7 @@
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                         <i class="ri-filter-line mr-1"></i> Apply Filters
                     </button>
-                    <a href="{{ route('grafik-asesmen.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    <a href="{{ route('grafik-asesmen.sum-chart') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
                         <i class="ri-restart-line mr-1"></i> Clear
                     </a>
                 </div>
@@ -177,39 +178,39 @@
         <!-- Chart Container -->
         <div class="bg-white rounded-lg p-4 shadow-sm mb-6">
             <div class="mb-4">
-                <h3 class="text-lg font-medium text-gray-700">Item Frequency Bar Chart</h3>
+                <h3 class="text-lg font-medium text-gray-700">Item Sum Score Bar Chart</h3>
             </div>
             <div style="height: 500px;">
-                <canvas id="itemChart"></canvas>
+                <canvas id="itemSumChart"></canvas>
             </div>
         </div>
 
         <!-- Summary Table -->
         <div class="bg-white rounded-lg p-4 shadow-sm">
-            <h3 class="text-lg font-medium text-gray-700 mb-4">Detailed Statistics</h3>
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Detailed Sum Statistics</h3>
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
-                        <tr class="bg-blue-500 text-white">
+                        <tr class="bg-green-500 text-white">
                             <th class="px-4 py-2 text-left text-sm font-medium">No</th>
                             <th class="px-4 py-2 text-left text-sm font-medium">Item Code</th>
                             <th class="px-4 py-2 text-left text-sm font-medium">Description</th>
-                            <th class="px-4 py-2 text-right text-sm font-medium">Count</th>
+                            <th class="px-4 py-2 text-right text-sm font-medium">Total Sum</th>
                             <th class="px-4 py-2 text-right text-sm font-medium">Percentage</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $totalCount = collect($itemCounts)->sum('count');
+                            $totalSum = collect($itemSums)->sum('sum');
                         @endphp
-                        @foreach($itemCounts as $index => $item)
-                            <tr class="border-b border-gray-200 {{ $loop->even ? 'bg-blue-50' : 'bg-white' }}">
+                        @foreach($itemSums as $index => $item)
+                            <tr class="border-b border-gray-200 {{ $loop->even ? 'bg-green-50' : 'bg-white' }}">
                                 <td class="px-4 py-2 text-sm">{{ $index + 1 }}</td>
                                 <td class="px-4 py-2 text-sm font-medium">{{ $item['label'] }}</td>
                                 <td class="px-4 py-2 text-sm">{{ $item['description'] }}</td>
-                                <td class="px-4 py-2 text-sm text-right font-semibold">{{ number_format($item['count']) }}</td>
+                                <td class="px-4 py-2 text-sm text-right font-semibold">{{ number_format($item['sum']) }}</td>
                                 <td class="px-4 py-2 text-sm text-right">
-                                    {{ $totalCount > 0 ? number_format(($item['count'] / $totalCount) * 100, 1) : '0' }}%
+                                    {{ $totalSum > 0 ? number_format(($item['sum'] / $totalSum) * 100, 1) : '0' }}%
                                 </td>
                             </tr>
                         @endforeach
@@ -222,25 +223,36 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // Toggle department filter based on division selection
+        function toggleDeptFilter(divisionValue) {
+            const deptFilter = document.getElementById('deptFilter');
+            if (divisionValue) {
+                deptFilter.disabled = true;
+                deptFilter.value = '';
+            } else {
+                deptFilter.disabled = false;
+            }
+        }
+
         // Prepare data for Chart.js
-        const itemData = @json($itemCounts);
+        const itemData = @json($itemSums);
         
         // Extract labels and data
         const labels = itemData.map(item => item.label);
-        const data = itemData.map(item => item.count);
+        const data = itemData.map(item => item.sum);
         const descriptions = itemData.map(item => item.description);
 
         // Create the chart
-        const ctx = document.getElementById('itemChart').getContext('2d');
-        const itemChart = new Chart(ctx, {
+        const ctx = document.getElementById('itemSumChart').getContext('2d');
+        const itemSumChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Assessment Item Frequency',
+                    label: 'Assessment Item Sum Score',
                     data: data,
-                    backgroundColor: 'rgba(59, 130, 246, 0.8)',
-                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                    borderColor: 'rgb(34, 197, 94)',
                     borderWidth: 1,
                     borderRadius: 4,
                     borderSkipped: false,
@@ -270,7 +282,7 @@
                             label: function(context) {
                                 const index = context.dataIndex;
                                 return [
-                                    'Count: ' + context.parsed.y.toLocaleString(),
+                                    'Sum Score: ' + context.parsed.y.toLocaleString(),
                                     'Description: ' + descriptions[index]
                                 ];
                             }
@@ -278,7 +290,7 @@
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         titleColor: 'white',
                         bodyColor: 'white',
-                        borderColor: 'rgb(59, 130, 246)',
+                        borderColor: 'rgb(34, 197, 94)',
                         borderWidth: 1,
                         cornerRadius: 6,
                         displayColors: false,
@@ -319,7 +331,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Frequency Count',
+                            text: 'Sum Score',
                             color: 'rgb(55, 65, 81)',
                             font: {
                                 size: 14,

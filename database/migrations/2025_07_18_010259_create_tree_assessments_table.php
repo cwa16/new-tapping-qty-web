@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('tree_assessments', function (Blueprint $table) {
             $table->id();
+            $table->string('assessment_code')->nullable();
+            $table->foreignId('tree_id')->constrained('trees')->onDelete('cascade');
+            $table->foreignId('criteria_id')->constrained('criteria')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('assessment_code')->references('assessment_code')->on('assessment_details')->onDelete('cascade');
         });
     }
 

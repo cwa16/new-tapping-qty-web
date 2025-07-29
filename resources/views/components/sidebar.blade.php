@@ -28,6 +28,12 @@
                 Grafik Asesmen
             </a>
         </li>
+        <li>
+            <a href="{{ route('tapper-report.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
+                <i class="ri-file-chart-line mr-2 text-lg"></i>
+                Tapper Report
+            </a>
+        </li>
 
         <!-- Data Master Section -->
         <li class="mt-4">

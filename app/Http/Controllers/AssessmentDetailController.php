@@ -10,7 +10,7 @@ class AssessmentDetailController extends Controller
     public function index(Request $request)
     {
         // Get filter values
-        $filters = $request->only(['kemandoran', 'panel_sadap', 'dept']);
+        $filters = $request->only(['kemandoran', 'panel_sadap', 'dept', 'date_from', 'date_to']);
 
         // Get all assessment data grouped by kemandoran, panel_sadap, and individual kelas values
         $summaryByKemandoranPanel = [];
@@ -31,6 +31,16 @@ class AssessmentDetailController extends Controller
             $baseQuery->where('dept', $filters['dept']);
         }
 
+        // Date range filter
+        if ($request->filled('date_from') && $request->date_from !== '') {
+            $baseQuery->whereDate('tgl_inspeksi', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to') && $request->date_to !== '') {
+            $baseQuery->whereDate('tgl_inspeksi', '<=', $request->date_to);
+        }
+
+        // dd($baseQuery->toSql());
         // Get data for kelas perawan (1, 2, 3, 4, NC)
         $kelasPerawanData = (clone $baseQuery)
             ->select('kemandoran', 'panel_sadap', 'dept', 'kelas_perawan', DB::raw('COUNT(*) AS penyadap'))
@@ -180,6 +190,8 @@ class AssessmentDetailController extends Controller
         $panelSadap = $request->get('panel_sadap');
         $kelasType = $request->get('kelas_type'); // perawan, pulihan, nta
         $kelasValue = $request->get('kelas_value'); // 1, 2, 3, 4, NC
+        $dateFrom = $request->get('date_from');
+        $dateTo = $request->get('date_to');
 
         // Normalize kemandoran for consistent filtering
         $normalizedKemandoran = trim(ucwords(strtolower($kemandoran)));
@@ -188,6 +200,22 @@ class AssessmentDetailController extends Controller
         $query = DB::table('assessments')
             ->where('kemandoran', 'LIKE', '%' . $kemandoran . '%')
             ->where('panel_sadap', $panelSadap);
+
+        if ($dateFrom) {
+            $query->whereDate('tgl_inspeksi', '>=', $dateFrom);
+        }
+        if ($dateTo) {
+            $query->whereDate('tgl_inspeksi', '<=', $dateTo);
+        }
+
+        // Date range filter
+        // if ($request->filled('date_from') && $request->date_from !== '') {
+        //     $query->whereDate('tgl_inspeksi', '>=', $request->date_from);
+        // }
+
+        // if ($request->filled('date_to') && $request->date_to !== '') {
+        //     $query->whereDate('tgl_inspeksi', '<=', $request->date_to);
+        // }
 
         // Add the specific kelas filter
         switch ($kelasType) {

@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlokController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TapperReportController;
+use App\Http\Controllers\GrafikAsesmenController;
 use App\Http\Controllers\TreeAssessmentController;
 use App\Http\Controllers\AssessmentDetailController;
-use App\Http\Controllers\GrafikAsesmenController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,3 +39,10 @@ Route::group(['prefix' => 'master-blok'], function () {
 
 Route::get('/grafik-asesmen', [GrafikAsesmenController::class, 'index'])
     ->name('grafik-asesmen.index');
+Route::get('/grafik-asesmen/sum-chart', [GrafikAsesmenController::class, 'sumChart'])
+    ->name('grafik-asesmen.sum-chart');
+
+Route::get('/tapper-report', [TapperReportController::class, 'index'])
+    ->name('tapper-report.index');
+Route::get('/tapper-report/{nik}', [TapperReportController::class, 'detail'])
+    ->name('tapper-report.detail');
