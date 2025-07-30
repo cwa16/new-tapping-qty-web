@@ -38,22 +38,9 @@
             </div>
         </div>
 
-        <!-- Score History Chart -->
-        @if($chartData->count() > 1)
-            <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
-                <div class="mb-4">
-                    <h3 class="text-lg font-medium text-gray-900">Score History</h3>
-                    <p class="text-sm text-gray-500">Assessment scores over time</p>
-                </div>
-                <div class="h-80">
-                    <canvas id="scoreChart"></canvas>
-                </div>
-            </div>
-        @endif
-
-        {{-- <!-- Date Filter -->
+        <!-- Date Filter -->
         <div class="mb-4 bg-white rounded-lg p-4 shadow-sm">
-            <form action="{{ route('tapper-report.detail', $tapperInfo->nik) }}" method="GET" class="flex items-end space-x-4">
+            <form action="{{ route('tapper-report.detail', $tapperInfo->nik_penyadap) }}" method="GET" class="flex items-end space-x-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
                     <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" 
@@ -70,14 +57,27 @@
                         Filter
                     </button>
                     @if(!empty($filters['date_from']) || !empty($filters['date_to']))
-                        <a href="{{ route('tapper-report.detail', $tapperInfo->nik) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200 text-sm">
+                        <a href="{{ route('tapper-report.detail', $tapperInfo->nik_penyadap) }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200 text-sm">
                             <i class="ri-refresh-line mr-1"></i>
                             Clear
                         </a>
                     @endif
                 </div>
             </form>
-        </div> --}}
+        </div>
+
+        <!-- Score History Chart -->
+        @if($chartData->count() > 1)
+            <div class="mb-4 bg-white rounded-lg shadow-sm p-4">
+                <div class="mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Score History</h3>
+                    <p class="text-sm text-gray-500">Assessment scores over time</p>
+                </div>
+                <div class="h-80">
+                    <canvas id="scoreChart"></canvas>
+                </div>
+            </div>
+        @endif
 
         {{-- <!-- Summary Statistics -->
         <div class="mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">

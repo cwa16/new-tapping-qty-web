@@ -82,7 +82,8 @@ class TapperReportController extends Controller
             ->first();
 
         if (!$tapperInfo) {
-            abort(404, 'Tapper not found');
+            return view('components.404-page');
+            // abort(404, 'Tapper not found');
         }
 
         // Build query for assessment history using nik_penyadap from assessments table
@@ -92,12 +93,21 @@ class TapperReportController extends Controller
         $assessments = $query->orderBy('tgl_inspeksi', 'desc')->paginate(10);
 
         // Get chart data for score history (all assessments for chart)
-        $chartData = DB::table('assessments')
+        $chartDataQuery = DB::table('assessments')
             ->select(['tgl_inspeksi', 'nilai'])
             ->where('nik_penyadap', $nik)
             ->whereNotNull('nilai')
-            ->orderBy('tgl_inspeksi', 'asc')
-            ->get()
+            ->orderBy('tgl_inspeksi', 'asc');
+
+        if ($request->filled('date_from')) {
+            $chartDataQuery->whereDate('tgl_inspeksi', '>=', $request->input('date_from'));
+        }
+
+        if ($request->filled('date_to')) {
+            $chartDataQuery->whereDate('tgl_inspeksi', '<=', $request->input('date_to'));
+        }
+
+        $chartData = $chartDataQuery->get()
             ->map(function ($item) {
                 return [
                     'date' => $item->tgl_inspeksi,

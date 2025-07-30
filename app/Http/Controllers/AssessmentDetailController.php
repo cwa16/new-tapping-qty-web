@@ -230,7 +230,7 @@ class AssessmentDetailController extends Controller
                 break;
         }
 
-        $assessments = $query->get();
+        $assessments = $query->orderBy('tgl_inspeksi', 'desc')->get();
         // dd($assessments);
         // dd($kelasValue);
 

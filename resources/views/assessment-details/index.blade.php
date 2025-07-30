@@ -73,7 +73,62 @@
                     @endif
                 </div>
             </form>
+
         </div>
+
+        <!-- Active Filters Display -->
+        @if(!empty($filters['dept']) || !empty($filters['kemandoran']) || !empty($filters['panel_sadap']) || !empty($filters['date_from']) || !empty($filters['date_to']))
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="ri-filter-line text-blue-600"></i>
+                        <span class="text-sm font-medium text-blue-800">Active Filters:</span>
+                        <div class="flex flex-wrap gap-2">
+                            @if(!empty($filters['dept']))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Dept: {{ $filters['dept'] }}
+                                    <a href="{{ route('assessment-details.index', array_merge($filters, ['dept' => ''])) }}" class="ml-1 text-blue-600 hover:text-blue-800">
+                                        <i class="ri-close-line text-sm"></i>
+                                    </a>
+                                </span>
+                            @endif
+                            @if(!empty($filters['kemandoran']))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Kemandoran: {{ $filters['kemandoran'] }}
+                                    <a href="{{ route('assessment-details.index', array_merge($filters, ['kemandoran' => ''])) }}" class="ml-1 text-blue-600 hover:text-blue-800">
+                                        <i class="ri-close-line text-sm"></i>
+                                    </a>
+                                </span>
+                            @endif
+                            @if(!empty($filters['panel_sadap']))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Panel: {{ $filters['panel_sadap'] }}
+                                    <a href="{{ route('assessment-details.index', array_merge($filters, ['panel_sadap' => ''])) }}" class="ml-1 text-blue-600 hover:text-blue-800">
+                                        <i class="ri-close-line text-sm"></i>
+                                    </a>
+                                </span>
+                            @endif
+                            @if(!empty($filters['date_from']))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    From: {{ \Carbon\Carbon::parse($filters['date_from'])->format('d M Y') }}
+                                    <a href="{{ route('assessment-details.index', array_merge($filters, ['date_from' => ''])) }}" class="ml-1 text-blue-600 hover:text-blue-800">
+                                        <i class="ri-close-line text-sm"></i>
+                                    </a>
+                                </span>
+                            @endif
+                            @if(!empty($filters['date_to']))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    To: {{ \Carbon\Carbon::parse($filters['date_to'])->format('d M Y') }}
+                                    <a href="{{ route('assessment-details.index', array_merge($filters, ['date_to' => ''])) }}" class="ml-1 text-blue-600 hover:text-blue-800">
+                                        <i class="ri-close-line text-sm"></i>
+                                    </a>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         
         <!-- Results Summary -->
         {{-- <div class="flex justify-between items-center mt-4 mb-2">
@@ -92,8 +147,8 @@
             @endif
         </div> --}}
         
-        <div class="overflow-x-auto mt-2">
-            <table class="w-full bg-white rounded-lg shadow">
+        <div class="overflow-x-auto mt-2 rounded-lg shadow-md">
+            <table class="w-full">
                 <thead>
                     <tr class="bg-blue-500 text-white border border-gray-200">
                         <th class="px-4 py-3 text-center text-sm border border-gray-200" rowspan="2">No</th>

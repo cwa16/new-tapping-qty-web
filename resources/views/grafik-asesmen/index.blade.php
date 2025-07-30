@@ -18,7 +18,7 @@
             <div class="p-0">
                 <a href="{{ route('grafik-asesmen.sum-chart') }}" 
                    class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors duration-200">
-                    <i class="ri-bar-chart-line mr-1"></i> Sum Chart
+                    <i class="ri-bar-chart-line mr-1"></i> Sum Score Chart
                 </a>
             </div>
        </div>

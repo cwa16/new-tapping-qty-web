@@ -50,6 +50,7 @@
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Nama Penyadap</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Status</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Kemandoran</th>
+                        <th class="px-4 py-0.5 text-left text-sm font-medium">Blok</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Task</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Panel Sadap</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Status Kulit</th>
@@ -148,6 +149,7 @@
                             <td class="px-4 py-2">{{ $assessment->nama_penyadap }}</td>
                             <td class="px-4 py-2">{{ $assessment->status }}</td>
                             <td class="px-4 py-2">{{ $assessment->kemandoran }}</td>
+                            <td class="px-4 py-2">{{ $assessment->blok }}</td>
                             <td class="px-4 py-2">{{ $assessment->task }}</td>
                             <td class="px-4 py-2">{{ $assessment->panel_sadap }}</td>
                             <td class="px-4 py-2">{{ $assessment->jenis_kulit_pohon }}</td>
