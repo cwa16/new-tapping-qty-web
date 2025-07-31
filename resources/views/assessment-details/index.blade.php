@@ -161,21 +161,51 @@
                         <th class="px-4 py-3 text-center text-sm border border-gray-200" rowspan="2">Total</th>
                     </tr>
                     <tr class="bg-blue-500 text-white">
-                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
-                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
-                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">1</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">2</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">3</th>
-                        <th class="px-4 py-3 text-center border border-gray-200">4</th>
-                        <th class="px-2 py-3 text-center border border-gray-200">NC</th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score <= 10.9">1</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="10 < Score <= 20.9">2</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="20 < Score <= 26.9">3</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="26 < Score <= 32.9">4</span>
+                        </th>
+                        <th class="px-2 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score > 32">NC</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score <= 15.9">1</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="15 < Score <= 30.9">2</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="30 < Score <= 38.9">3</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="38 < Score <= 46.9">4</span>
+                        </th>
+                        <th class="px-2 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score > 46">NC</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score <= 12.9">1</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="12 < Score <= 25.9">2</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="25 < Score <= 32.9">3</span>
+                        </th>
+                        <th class="px-4 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="32 < Score <= 39.9">4</span>
+                        </th>
+                        <th class="px-2 py-3 text-center border border-gray-200">
+                            <span data-tippy-content="Score > 39">NC</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -434,13 +464,13 @@
     </div>
     
     <script>
-        // Initialize tooltips
-        tippy('[data-tippy-content]', {
-            theme: 'light',
-            placement: 'top',
-            arrow: true,
-            animation: 'fade',
-            delay: [100, 50]
-        });
+        // Tippy.js tooltips
+        // tippy('[data-tippy-content]', {
+        //     theme: 'light',
+        //     placement: 'top',
+        //     arrow: true,
+        //     animation: 'fade',
+        //     delay: [100, 50]
+        // });
     </script>
 </x-app-layout>

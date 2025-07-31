@@ -64,4 +64,16 @@
  <!-- Tippy.js JavaScript -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        tippy('[data-tippy-content]', {
+            theme: 'light',
+            placement: 'top',
+            arrow: true,
+            animation: 'fade',
+            delay: [100, 50]
+        });
+    });
+    </script>
 </html>

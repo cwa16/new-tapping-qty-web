@@ -24,13 +24,13 @@
         </li>
         <li>
             <a href="{{ route('grafik-asesmen.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
-                <i class="ri-line-chart-line mr-2 text-lg"></i>
+                <i class="ri-bar-chart-2-line mr-2 text-lg"></i>
                 Grafik Asesmen
             </a>
         </li>
         <li>
             <a href="{{ route('tapper-report.index') }}" class="block px-4 py-1 text-gray-600 hover:bg-gray-200 rounded">
-                <i class="ri-file-chart-line mr-2 text-lg"></i>
+                <i class="ri-line-chart-line  mr-2 text-lg"></i>
                 Tapper Report
             </a>
         </li>

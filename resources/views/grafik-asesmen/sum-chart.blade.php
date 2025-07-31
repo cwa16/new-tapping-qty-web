@@ -249,7 +249,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Assessment Item Sum Score',
+                    label: '',
                     data: data,
                     backgroundColor: 'rgba(34, 197, 94, 0.8)',
                     borderColor: 'rgb(34, 197, 94)',
@@ -263,7 +263,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true,
+                        display: false,
                         position: 'top',
                         labels: {
                             color: 'rgb(55, 65, 81)',

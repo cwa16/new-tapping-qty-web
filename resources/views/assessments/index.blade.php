@@ -315,13 +315,13 @@
 
 <script>
     // Tippy.js tooltips
-    tippy('[data-tippy-content]', {
-            theme: 'light',
-            placement: 'top',
-            arrow: true,
-            animation: 'fade',
-            delay: [100, 50]
-        });
+    // tippy('[data-tippy-content]', {
+    //         theme: 'light',
+    //         placement: 'top',
+    //         arrow: true,
+    //         animation: 'fade',
+    //         delay: [100, 50]
+    //     });
     
     // Filter modal functions
     function openFilterModal() {

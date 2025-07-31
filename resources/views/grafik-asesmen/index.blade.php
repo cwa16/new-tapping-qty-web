@@ -237,7 +237,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Assessment Item Frequency',
+                    label: '',
                     data: data,
                     backgroundColor: 'rgba(59, 130, 246, 0.8)',
                     borderColor: 'rgb(59, 130, 246)',
@@ -251,7 +251,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true,
+                        display: false,
                         position: 'top',
                         labels: {
                             color: 'rgb(55, 65, 81)',
