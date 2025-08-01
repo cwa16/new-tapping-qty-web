@@ -9,6 +9,14 @@
         </div>
     </div>
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
+        <div class="flex justify-between py-2">
+            <div class="">
+                <h2 class="text-lg font-bold text-gray-500">Detail Summary Assessment</h2>
+            </div>
+            <div class="">
+                <button class="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded-md" onclick="history.back()">Back</button>
+            </div>
+        </div>
         <div class="">
             <table class="w-full table-auto border-collapse">
                 <thead>
@@ -20,6 +28,7 @@
                         <th class="px-2 py-1 font-normal text-left">NIK Penyadap</th>
                         <th class="px-2 py-1 font-normal text-left">Nama Penyadap</th>
                         <th class="px-2 py-1 font-normal text-left">Panel Sadap</th>
+                        <th class="px-2 py-1 font-normal text-left">Status Kulit</th>
                         <th class="px-2 py-1 font-normal">Nilai</th>
                         <th class="px-2 py-1 font-normal">Kelas</th>
                     </tr>
@@ -35,6 +44,7 @@
                         <td class="px-2 py-0.5">{{ $item->nik_penyadap }}</td>
                         <td class="px-2 py-0.5">{{ $item->nama_penyadap }}</td>
                         <td class="px-2 py-0.5">{{ $item->panel_sadap }}</td>
+                        <td class="px-2 py-0.5 text-left">{{ $kelas_type }}</td>
                         <td class="px-2 py-0.5 text-center">{{ $item->nilai }}</td>
                         <td class="px-2 py-0.5 text-center">
                             @php
