@@ -8,7 +8,7 @@
             <span class="text-base font-light text-gray-500">Frequency Chart</span>
         </div>
     </div>
-    
+
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
        <div class="flex justify-between">
          <div class="mb-4">
@@ -16,9 +16,9 @@
             <p class="text-gray-600 text-sm">Grafik menunjukkan analisis data asesmen berdasarkan frekuensi dari setiap item asesmen.</p>
         </div>
             <div class="p-0">
-                <a href="{{ route('grafik-asesmen.sum-chart') }}" 
+                <a href="{{ route('grafik-asesmen.sum-chart') }}"
                    class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors duration-200">
-                    <i class="ri-bar-chart-line mr-1"></i> Sum Score Chart
+                    <i class="ri-bar-chart-line mr-1"></i> Avg Score Chart
                 </a>
             </div>
        </div>
@@ -103,14 +103,14 @@
                     <!-- Date From Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
-                        <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" 
+                        <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <!-- Date To Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
-                        <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}" 
+                        <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
@@ -224,7 +224,7 @@
     <script>
         // Prepare data for Chart.js
         const itemData = @json($itemCounts);
-        
+
         // Extract labels and data
         const labels = itemData.map(item => item.label);
         const data = itemData.map(item => item.count);

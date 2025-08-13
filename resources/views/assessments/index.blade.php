@@ -6,14 +6,15 @@
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
         </div>
-        <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-            <i class="ri-add-line"></i> New Assessment
-        </a>
+        <button onclick="openUploadModal()" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+            <i class="ri-add-line"></i> Upload Data
+        </button>
     </div>
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-2">
         <div class="p-2 flex justify-between items-center">
             <form action="{{ route('assessments.index') }}" method="GET" class="flex items-center space-x-2">
-                <input type="text" name="search" value="{{ $filters['search'] ?? '' }}" placeholder="Search by Name" class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="search" value="{{ $filters['search'] ?? '' }}" placeholder="Search by Name"
+                    class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <!-- Preserve other filters when searching -->
                 <input type="hidden" name="department" value="{{ $filters['department'] ?? '' }}">
                 <input type="hidden" name="blok" value="{{ $filters['blok'] ?? '' }}">
@@ -27,7 +28,8 @@
             <div class="p-0 flex items-center space-x-2">
                 <form action="{{ route('assessments.index') }}" method="GET" class="flex items-center space-x-2">
                     <!-- Filter Modal Button -->
-                    <button type="button" onclick="openFilterModal()" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    <button type="button" onclick="openFilterModal()"
+                        class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
                         <i class="ri-filter-line text-white text-sm"></i>
                     </button>
                 </form>
@@ -55,13 +57,16 @@
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Panel Sadap</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">Status Kulit</th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu kecil (BO) / Tidak Mengunakan Gagang Panjang (HO)" class="">1.1</span>
+                            <span data-tippy-content="Luka kayu kecil (BO) / Tidak Mengunakan Gagang Panjang (HO)"
+                                class="">1.1</span>
                         </th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu sedang (BO)/Tidak Menggunakan Pisau sodhok(HO)" class="">1.2</span>
+                            <span data-tippy-content="Luka kayu sedang (BO)/Tidak Menggunakan Pisau sodhok(HO)"
+                                class="">1.2</span>
                         </th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu besar (BO)/Sadapan Tidak Disodhok (HO)" class="">1.3</span>
+                            <span data-tippy-content="Luka kayu besar (BO)/Sadapan Tidak Disodhok (HO)"
+                                class="">1.3</span>
                         </th>
                         <th class="px-4 py-0.5 text-left text-sm font-medium">
                             <span data-tippy-content="Kedalaman sadap (normatif)" class="">2.1</span>
@@ -140,10 +145,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($assessments as $assessment)
+                    @foreach ($assessments as $assessment)
                         <tr class="border-b border-gray-200 {{ $loop->even ? 'bg-blue-100' : 'bg-white' }}">
-                            <td class="px-4 py-2">{{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}</td>
-                            <td class="px-4 py-2">{{ Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}</td>
+                            <td class="px-4 py-2">
+                                {{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}
+                            </td>
+                            <td class="px-4 py-2">
+                                {{ Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}</td>
                             <td class="px-4 py-2">{{ $assessment->dept }}</td>
                             <td class="px-4 py-2">{{ $assessment->nik_penyadap }}</td>
                             <td class="px-4 py-2">{{ $assessment->nama_penyadap }}</td>
@@ -181,26 +189,25 @@
                             <td class="px-4 py-2">{{ $assessment->item10 }}</td>
                             <td class="px-4 py-2">{{ $assessment->nilai }}</td>
                             <td class="px-4 py-2">
-                              {{ $assessment->kelas_perawan }}
+                                {{ $assessment->kelas_perawan }}
                             </td>
                             <td class="px-4 py-2">
-                               {{ $assessment->kelas_pulihan }}
+                                {{ $assessment->kelas_pulihan }}
                             </td>
                             <td class="px-4 py-2">
-                               {{ $assessment->kelas_nta }}
+                                {{ $assessment->kelas_nta }}
                             </td>
 
                         </tr>
-                            
-                        @endforeach
+                    @endforeach
 
-                    
+
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Pagination Links -->
-        @if($assessments->hasPages())
+        @if ($assessments->hasPages())
             <div class="mt-4 px-4">
                 <div class="pagination-wrapper">
                     {{ $assessments->appends(request()->query())->links('components.pagination') }}
@@ -208,9 +215,10 @@
             </div>
         @endif
     </div>
-    
+
     <!-- Filter Modal -->
-    <div id="filterModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" style="display: none;">
+    <div id="filterModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        style="display: none;">
         <div class="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[600px] mx-4">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">Filter Data Assessments</h3>
@@ -218,97 +226,134 @@
                     <i class="ri-close-line text-xl"></i>
                 </button>
             </div>
-            
+
             <form action="{{ route('assessments.index') }}" method="GET">
                 <!-- Preserve search when filtering -->
                 <input type="hidden" name="search" value="{{ $filters['search'] ?? '' }}">
-                
+
                 <div class="grid grid-cols-2 gap-4">
                     <!-- Department Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Department:</label>
-                        <select name="department" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select name="department"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">All Departments</option>
-                            @foreach($departments as $dept)
-                                <option value="{{ $dept->dept }}" {{ ($filters['department'] ?? '') == $dept->dept ? 'selected' : '' }}>
+                            @foreach ($departments as $dept)
+                                <option value="{{ $dept->dept }}"
+                                    {{ ($filters['department'] ?? '') == $dept->dept ? 'selected' : '' }}>
                                     {{ $dept->dept }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Block Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Block:</label>
-                        <select name="blok" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select name="blok"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">All Blocks</option>
-                            @foreach($bloks as $blok)
-                                <option value="{{ $blok->blok }}" {{ ($filters['blok'] ?? '') == $blok->blok ? 'selected' : '' }}>
+                            @foreach ($bloks as $blok)
+                                <option value="{{ $blok->blok }}"
+                                    {{ ($filters['blok'] ?? '') == $blok->blok ? 'selected' : '' }}>
                                     {{ $blok->blok }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Kemandoran Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kemandoran:</label>
-                        <select name="kemandoran" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select name="kemandoran"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">All Kemandoran</option>
-                            @foreach($kemandoran as $kmd)
-                                <option value="{{ $kmd->kemandoran }}" {{ ($filters['kemandoran'] ?? '') == $kmd->kemandoran ? 'selected' : '' }}>
+                            @foreach ($kemandoran as $kmd)
+                                <option value="{{ $kmd->kemandoran }}"
+                                    {{ ($filters['kemandoran'] ?? '') == $kmd->kemandoran ? 'selected' : '' }}>
                                     {{ $kmd->kemandoran }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Empty div for spacing -->
                     <div></div>
-                    
+
                     <!-- Date From Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">From Date:</label>
-                        <input type="date" 
-                               name="date_from" 
-                               id="dateFrom"
-                               value="{{ $filters['date_from'] ?? '' }}"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="date" name="date_from" id="dateFrom"
+                            value="{{ $filters['date_from'] ?? '' }}"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                     <!-- Date To Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">To Date:</label>
-                        <input type="date" 
-                               name="date_to" 
-                               id="dateTo"
-                               value="{{ $filters['date_to'] ?? '' }}"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="date" name="date_to" id="dateTo" value="{{ $filters['date_to'] ?? '' }}"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
-                
+
                 <div class="flex justify-between mt-6">
                     <div>
-                        @if(!empty($filters['department']) || !empty($filters['blok']) || !empty($filters['kemandoran']) || !empty($filters['date_from']) || !empty($filters['date_to']))
-                            <a href="{{ route('assessments.index', ['search' => $filters['search'] ?? '']) }}" 
-                               class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                        @if (
+                            !empty($filters['department']) ||
+                                !empty($filters['blok']) ||
+                                !empty($filters['kemandoran']) ||
+                                !empty($filters['date_from']) ||
+                                !empty($filters['date_to']))
+                            <a href="{{ route('assessments.index', ['search' => $filters['search'] ?? '']) }}"
+                                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
                                 Clear All Filters
                             </a>
                         @endif
                     </div>
                     <div class="flex space-x-2">
-                        <button type="button" 
-                                onclick="closeFilterModal()"
-                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                        <button type="button" onclick="closeFilterModal()"
+                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button type="submit" 
-                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                             Apply Filters
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    {{-- Upload Modal --}}
+
+    <div id="uploadModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        style="display: none;">
+        <div class="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-[600px] mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">Upload Data Assessments</h3>
+                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+            <!-- Upload form goes here -->
+            <form action="{{ route('assessment.import-form') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label for="file" class="block text-sm font-medium text-gray-700 mb-2">Select File:</label>
+                    <input type="file" name="file" id="file" accept=".xlsx, .xls, .csv" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" onclick="closeUploadModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Upload</button>
+                </div>
+            </form>
+            <a href="{{ route('assessment.download-template') }}"
+                class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                Download Format
+            </a>
         </div>
     </div>
 </x-app-layout>
@@ -322,25 +367,36 @@
     //         animation: 'fade',
     //         delay: [100, 50]
     //     });
-    
+
     // Filter modal functions
     function openFilterModal() {
         document.getElementById('filterModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
-    
+
     function closeFilterModal() {
         document.getElementById('filterModal').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
-    
+
+    // Upload modal functions
+    function openUploadModal() {
+        document.getElementById('uploadModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeUploadModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
     // Close modal when clicking outside
     document.getElementById('filterModal').addEventListener('click', function(e) {
         if (e.target === this) {
             closeFilterModal();
         }
     });
-    
+
     // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {

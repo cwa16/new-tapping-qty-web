@@ -69,8 +69,6 @@ class TreeAssessmentController extends Controller
             ->orderBy('kemandoran')
             ->get();
 
-
-
         return view('assessments.index', [
             'title' => 'Assessments List',
             'assessments' => $assessments,

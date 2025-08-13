@@ -2,21 +2,21 @@
     <div class="mx-2 mb-2 flex items-center space-x-2 justify-between">
         <div class="items-center flex space-x-2">
             <a href="{{ route('grafik-asesmen.index') }}">
-                <span class="text-base font-light text-gray-500 hover:text-gray-600">Grafik Asesmen</span>
+                <span class="text-base font-light text-gray-500 hover:text-gray-600">Grafik Asesmendsdsd</span>
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
-            <span class="text-base font-light text-gray-500">Sum Chart</span>
+            <span class="text-base font-light text-gray-500">Average Chart</span>
         </div>
     </div>
-    
+
     <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
         <div class="mb-4 flex justify-between items-start">
             <div>
-                <h2 class="text-xl font-semibold text-gray-800 mb-2">Assessment Score Sum Analysis</h2>
-                <p class="text-gray-600 text-sm">Grafik menunjukkan analisis data asesmen berdasarkan jumlah total skor dari setiap item asesmen.</p>
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Assessment Score Average Analysis</h2>
+                <p class="text-gray-600 text-sm">Grafik menunjukkan analisis data asesmen berdasarkan jumlah rata-rata skor dari setiap item asesmen.</p>
             </div>
             <div class="flex space-x-2">
-                <a href="{{ route('grafik-asesmen.index') }}" 
+                <a href="{{ route('grafik-asesmen.index') }}"
                    class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors duration-200">
                     <i class="ri-bar-chart-line mr-1"></i> Frequency Chart
                 </a>
@@ -26,7 +26,7 @@
         <!-- Filters -->
         <div class="bg-white rounded-lg p-4 shadow-sm mb-6">
             <h3 class="text-lg font-medium text-gray-700 mb-4">Filters</h3>
-            
+
             <form method="GET" action="{{ route('grafik-asesmen.sum-chart') }}">
                 <!-- First Row - 4 filters -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -37,7 +37,7 @@
                             <option value="">All Divisions</option>
                             @foreach($divisions as $divisionKey => $divisionDepts)
                                 <option value="{{ $divisionKey }}" {{ ($filters['division'] ?? '') == $divisionKey ? 'selected' : '' }}>
-                                    Division {{ $divisionKey }} ({{ implode(', ', $divisionDepts) }})
+                                    Division {{ $divisionKey }}
                                 </option>
                             @endforeach
                         </select>
@@ -104,14 +104,14 @@
                     <!-- Date From Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
-                        <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" 
+                        <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <!-- Date To Filter -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
-                        <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}" 
+                        <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
@@ -178,7 +178,7 @@
         <!-- Chart Container -->
         <div class="bg-white rounded-lg p-4 shadow-sm mb-6">
             <div class="mb-4">
-                <h3 class="text-lg font-medium text-gray-700">Item Sum Score Bar Chart</h3>
+                <h3 class="text-lg font-medium text-gray-700">Item Average Score Bar Chart</h3>
             </div>
             <div style="height: 500px;">
                 <canvas id="itemSumChart"></canvas>
@@ -187,7 +187,7 @@
 
         <!-- Summary Table -->
         <div class="bg-white rounded-lg p-4 shadow-sm">
-            <h3 class="text-lg font-medium text-gray-700 mb-4">Detailed Sum Statistics</h3>
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Detailed Average Statistics</h3>
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
@@ -195,7 +195,7 @@
                             <th class="px-4 py-2 text-left text-sm font-medium">No</th>
                             <th class="px-4 py-2 text-left text-sm font-medium">Item Code</th>
                             <th class="px-4 py-2 text-left text-sm font-medium">Description</th>
-                            <th class="px-4 py-2 text-right text-sm font-medium">Total Sum</th>
+                            <th class="px-4 py-2 text-right text-sm font-medium">Average</th>
                             <th class="px-4 py-2 text-right text-sm font-medium">Percentage</th>
                         </tr>
                     </thead>
@@ -208,9 +208,9 @@
                                 <td class="px-4 py-2 text-sm">{{ $index + 1 }}</td>
                                 <td class="px-4 py-2 text-sm font-medium">{{ $item['label'] }}</td>
                                 <td class="px-4 py-2 text-sm">{{ $item['description'] }}</td>
-                                <td class="px-4 py-2 text-sm text-right font-semibold">{{ number_format($item['sum']) }}</td>
+                                <td class="px-4 py-2 text-sm text-right font-semibold">{{ number_format($item['sum'], 2) }}</td>
                                 <td class="px-4 py-2 text-sm text-right">
-                                    {{ $totalSum > 0 ? number_format(($item['sum'] / $totalSum) * 100, 1) : '0' }}%
+                                    {{ $totalSum > 0 ? number_format(($item['sum'] / $totalSum) * 100) : '0' }}%
                                 </td>
                             </tr>
                         @endforeach
@@ -236,7 +236,7 @@
 
         // Prepare data for Chart.js
         const itemData = @json($itemSums);
-        
+
         // Extract labels and data
         const labels = itemData.map(item => item.label);
         const data = itemData.map(item => item.sum);
@@ -282,7 +282,7 @@
                             label: function(context) {
                                 const index = context.dataIndex;
                                 return [
-                                    'Sum Score: ' + context.parsed.y.toLocaleString(),
+                                    'Avg Score: ' + context.parsed.y.toLocaleString(),
                                     'Description: ' + descriptions[index]
                                 ];
                             }
@@ -331,7 +331,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Sum Score',
+                            text: 'Avg. Score',
                             color: 'rgb(55, 65, 81)',
                             font: {
                                 size: 14,

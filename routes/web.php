@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AssessmentDetailController;
 use App\Http\Controllers\BlokController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TapperReportController;
 use App\Http\Controllers\GrafikAsesmenController;
+use App\Http\Controllers\TapperReportController;
 use App\Http\Controllers\TreeAssessmentController;
-use App\Http\Controllers\AssessmentDetailController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,3 +47,14 @@ Route::get('/tapper-report', [TapperReportController::class, 'index'])
     ->name('tapper-report.index');
 Route::get('/tapper-report/{nik}', [TapperReportController::class, 'detail'])
     ->name('tapper-report.detail');
+
+Route::get('/tapper-report-chart/{nik}', [TapperReportController::class, 'chart'])
+    ->name('tapper-report.chart');
+    Route::get('/tapper-report-single-chart/{nik}/{tgl?}', [TapperReportController::class, 'single_chart'])
+    ->name('tapper-report.single-chart');
+
+Route::post('/import-assessment', [AssessmentController::class, 'import'])
+    ->name('assessment.import-form');
+
+Route::get('/assessment/download-template', [AssessmentController::class, 'downloadTemplate'])
+    ->name('assessment.download-template');

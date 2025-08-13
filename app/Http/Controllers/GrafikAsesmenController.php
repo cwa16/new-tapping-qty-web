@@ -277,7 +277,7 @@ class GrafikAsesmenController extends Controller
             }
 
             // Calculate sum instead of count
-            $sum = $query->sum($itemColumn) ?? 0;
+            $sum = $query->average($itemColumn) ?? 0;
 
             $itemSums[] = [
                 'item' => $itemColumn,
