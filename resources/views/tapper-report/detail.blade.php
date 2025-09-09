@@ -16,7 +16,8 @@
         </div>
     </div>
 
-    <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4">
+    <div class="mx-2 bg-gray-50 rounded-md shadow-md shadow-black/10 p-4" id="exportSection">
+
         <div
             class="mb-3 mx-2 bg-white rounded-lg shadow-md shadow-black/10 p-3 flex flex-col md:flex-row md:justify-between md:items-start gap-4">
             <div class="bg-white rounded-lg shadow-sm p-3 md:w-1/2"> {{-- Added md:w-1/2 to give it half width on medium screens and up --}}
@@ -59,6 +60,11 @@
                             <i class="ri-filter-line mr-1"></i>
                             Filter
                         </button>
+                        <button type="button" id="btnExport"
+                            class="px-3 py-1.5 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200 text-xs">
+                            <i class="ri-file-download-line mr-1"></i>
+                            Export PDF
+                        </button>
 
                         @if (!empty($filters['date_from']) || !empty($filters['date_to']))
                             <a href="{{ route('tapper-report.detail', $tapperInfo->nik_penyadap) }}"
@@ -98,7 +104,7 @@
 
             <div class="bg-white rounded-lg shadow-sm overflow-hidden w-full md:w-2/3"> {{-- Table takes 2/3 width on medium+ screens --}}
                 <div class="px-4 py-3 border-b border-gray-100">
-                    <h3 class="text-base font-semibold text-gray-800">Assessment History
+                    <h3 class="text-base font-semibold text-gray-800">a) Assessment History
                         <a href="{{ route('tapper-report.chart', $tapperInfo->nik_penyadap) }}"
                             class="px-3 py-1.5 bg-blue-400 text-white rounded-md hover:bg-blue-600 transition duration-200 text-xs">Chart</a>
                     </h3>
@@ -108,60 +114,56 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th
-                                    class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     No</th>
                                 <th
-                                    class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Date</th>
                                 <th
-                                    class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Inspection By</th>
+                                <th
+                                    class="px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Panel Sadap</th>
                                 <th
-                                    class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Task</th>
                                 <th
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
-                                    Status</th>
-                                <th
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Score</th>
                                 <th
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Kelas Perawan</th>
                                 <th
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Kelas Pulihan</th>
                                 <th
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    class="px-2 py-1 text-center text-xs font-medium text-gray-600 uppercase tracking-wider">
                                     Kelas NTA</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($assessments as $assessment)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-700">
                                         {{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-700">
                                         {{ \Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-700">
+                                        {{ $assessment->nama_inspektur }}</td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-700">
                                         {{ $assessment->panel_sadap }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-700">
                                         {{ $assessment->task }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-center">
-                                        <span
-                                            class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            {{ $assessment->status }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-center">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">
                                         <a href="{{ route('tapper-report.single-chart', [$tapperInfo->nik_penyadap, $assessment->tgl_inspeksi]) }}"
                                             class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-200 hover:text-green-900 transition-colors duration-150">
                                             {{ $assessment->nilai }}
                                         </a>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-center">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">
                                         @if ($assessment->kelas_perawan)
                                             <span
                                                 class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
@@ -171,7 +173,7 @@
                                             <span class="text-gray-400">-</span>
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-center">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">
                                         @if ($assessment->kelas_pulihan)
                                             <span
                                                 class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -181,7 +183,7 @@
                                             <span class="text-gray-400">-</span>
                                         @endif
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-center">
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">
                                         @if ($assessment->kelas_nta)
                                             <span
                                                 class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
@@ -201,30 +203,142 @@
                                 </tr>
                             @endforelse
                         </tbody>
+                        @if ($assessments->isNotEmpty())
+                            <tfoot>
+                                <tr class="bg-gray-100 font-bold">
+                                    <td colspan="6" class="px-2 py-2 text-right text-sm">Rata-rata Score:</td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">
+                                        {{ number_format($assessments->avg('nilai'), 2) }}
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">-</td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">-</td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm text-center">-</td>
+                                </tr>
+                            </tfoot>
+                        @endif
+                    </table>
+                </div>
+
+                <div class="px-4 py-3 border-b border-gray-100">
+                    <h3 class="text-base font-semibold text-gray-800">b) Training Data (Tapping Quality)
+                    </h3>
+                </div>
+                <div class="">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th rowspan="2"
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    No</th>
+                                <th colspan="2"
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Teori</th>
+                                <th colspan="2"
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Praktek (Kelas Sadap)</th>
+                                <th rowspan="2"
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Judge</th>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Date</th>
+                                <th
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Score</th>
+                                <th
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Date</th>
+                                <th
+                                    class="border border-gray-200 px-2 py-1 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Score</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @forelse($pairedData as $pair)
+                                <tr class="hover:bg-gray-50">
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+                                        {{ \Carbon\Carbon::parse($pair['teori']->from_date)->format('d M Y') }}
+                                    </td>
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                            {{ $pair['teori']->score }}
+                                        </span>
+                                    </td>
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+                                        {{ $pair['praktek'] ? \Carbon\Carbon::parse($pair['praktek']->from_date)->format('d M Y') : '-' }}
+                                    </td>
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                            {{ $pair['praktek'] ? $pair['praktek']->score : '-' }}
+                                        </span>
+                                    </td>
+                                    <td
+                                        class="border border-gray-200 px-2 py-1 whitespace-nowrap text-sm text-gray-700">
+                                        {{ $pair['teori']->ket }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="px-2 py-1 text-center text-gray-500">
+                                        <i class="ri-file-list-line text-3xl text-gray-300 mb-2"></i>
+                                        <p class="text-sm">No training data found.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
                     </table>
                 </div>
             </div>
 
+            {{-- Chart --}}
             @if ($chartData->count() > 1)
-                <div class="w-full md:w-1/3 flex flex-col gap-4"> {{-- Charts section takes 1/3 width on medium+ screens --}}
+                <div class="w-full md:w-1/3 flex flex-col gap-4">
+                    {{-- Charts section takes 1/3 width on medium+ screens --}}
 
                     <div class="bg-white rounded-lg shadow-sm p-3 w-full">
                         <div class="mb-3">
                             <h3 class="text-base font-medium text-gray-900">Score History Chart</h3>
                             <p class="text-xs text-gray-500">Assessment scores over the time</p>
                         </div>
-                        <div class="h-60">
+                        <div class="h-100">
                             <canvas id="scoreChart"></canvas>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-lg shadow-sm p-3 w-full">
                         <div class="mb-3">
-                            <h3 class="text-base font-medium text-gray-900">Class History Chart</h3>
-                            <p class="text-xs text-gray-500">Assessment class over the time</p>
+                            <h3 class="text-base font-medium text-gray-900">Skor Tingkat Pemahaman Materi</h3>
                         </div>
-                        <div class="h-60">
-                            <canvas id="rankChart"></canvas>
+                        <div class="flex flex-col gap-1">
+                            <div class="flex gap-2">
+                                <div class="bg-gray-100 p-2 rounded-md flex-grow">
+                                    <p class="text-sm font-medium">1. Tidak paham materi (50%)</p>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded-md flex-grow">
+                                    <p class="text-sm font-medium">2. Paham sebagian (50-69%)</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="bg-gray-100 p-2 rounded-md flex-grow">
+                                    <p class="text-sm font-medium">3. Paham materi (70-90%)</p>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded-md flex-grow">
+                                    <p class="text-sm font-medium">4. Paham hampir seluruh materi (>90%)</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -245,10 +359,13 @@
     @if ($chartData->count() > 1)
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const ctx = document.getElementById('scoreChart').getContext('2d');
-                const ctx_rank = document.getElementById('rankChart').getContext('2d');
 
                 const chartData = @json($chartData);
                 const chartDataQueryRank = @json($chartDataQueryRank);
@@ -268,14 +385,14 @@
                 Chart.register(ChartDataLabels);
 
                 new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: labels,
                         datasets: [{
                             label: 'Assessment Score',
                             data: scores,
-                            borderColor: 'rgb(59, 130, 246)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderColor: '#3572EF',
+                            backgroundColor: '#3572EF',
                             borderWidth: 2,
                             fill: true,
                             tension: 0.4,
@@ -317,7 +434,7 @@
                         },
                         plugins: {
                             legend: {
-                                display: true,
+                                display: false,
                                 position: 'top'
                             },
                             tooltip: {
@@ -350,87 +467,55 @@
                     }
                 });
 
-                new Chart(ctx_rank, {
-                    type: 'doughnut',
-                    data: {
-                        // Define the labels for each segment (slice) of the doughnut chart here.
-                        // The order must match the order of data in the 'data' array below.
-                        labels: ['Kelas 1 Perawan', 'Kelas 2 Perawan', 'Kelas 3 Perawan'],
-                        datasets: [{
-                                // The 'label' property here is for the dataset itself, often used in tooltips.
-                                // For a doughnut chart, the individual segment labels are in the 'labels' array above.
-                                label: 'Total',
-                                data: [
-                                    chartDataQueryRank.kelas_perawan_rank1,
-                                    chartDataQueryRank.kelas_perawan_rank2,
-                                    chartDataQueryRank.kelas_perawan_rank3
-                                ],
-                                // It's highly recommended to use an array of colors for 'backgroundColor'
-                                // and 'borderColor' in a single-dataset doughnut chart, so each segment
-                                // gets a distinct color.
-                                backgroundColor: [
-                                    '#96EFFF', // Green for Rank 1
-                                    '#5FBDFF', // Yellow for Rank 2
-                                    '#7B66FF' // Red for Rank 3
-                                ],
-                                borderColor: [
-                                    '#96EFFF',
-                                    '#5FBDFF',
-                                    '#7B66FF'
-                                ],
-                                borderWidth: 1
-                            },
-                            {
-                                // The 'label' property here is for the dataset itself, often used in tooltips.
-                                // For a doughnut chart, the individual segment labels are in the 'labels' array above.
-                                label: 'Total',
-                                data: [
-                                    chartDataQueryRank.kelas_pulihan_rank1,
-                                    chartDataQueryRank.kelas_pulihan_rank2,
-                                    chartDataQueryRank.kelas_pulihan_rank3
-                                ],
-                                // It's highly recommended to use an array of colors for 'backgroundColor'
-                                // and 'borderColor' in a single-dataset doughnut chart, so each segment
-                                // gets a distinct color.
-                                backgroundColor: [
-                                    'rgba(34, 197, 94, 0.7)', // Green for Rank 1
-                                    'rgba(234, 179, 8, 0.7)', // Yellow for Rank 2
-                                    'rgba(239, 68, 68, 0.7)' // Red for Rank 3
-                                ],
-                                borderColor: [
-                                    'rgb(34, 197, 94)',
-                                    'rgb(234, 179, 8)',
-                                    'rgb(239, 68, 68)'
-                                ],
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: true
-                            },
-                            tooltip: {
-                                enabled: false
-                            },
-                            datalabels: {
-                                color: '#000',
-                                font: {
-                                    weight: 'bold'
-                                },
-                                formatter: (value) => value,
-                                anchor: 'end', // position relative to segment
-                                align: 'end', // direction (start, end, center)
-                                offset: 10 // how far from the segment
-                            }
-                        }
-                    },
+            });
+        </script>
 
-                });
+        <script>
+            document.getElementById("btnExport").addEventListener("click", function() {
+                const {
+                    jsPDF
+                } = window.jspdf;
+                const element = document.getElementById("exportSection");
 
+                htmlToImage.toPng(element, {
+                        cacheBust: true
+                    })
+                    .then((dataUrl) => {
+                        // 📌 Landscape mode
+                        const pdf = new jsPDF("l", "mm", "a4");
+
+                        const img = new Image();
+                        img.src = dataUrl;
+                        img.onload = () => {
+                            const pdfWidth = pdf.internal.pageSize.getWidth();
+                            const pdfHeight = (img.height * pdfWidth) / img.width;
+                            const pageHeight = pdf.internal.pageSize.getHeight();
+
+                            // kalau tinggi gambar > tinggi halaman, otomatis multi-page
+                            if (pdfHeight > pageHeight) {
+                                let position = 0;
+                                while (position < pdfHeight) {
+                                    pdf.addImage(
+                                        img,
+                                        "PNG",
+                                        0,
+                                        position * -1,
+                                        pdfWidth,
+                                        pdfHeight
+                                    );
+                                    position += pageHeight;
+                                    if (position < pdfHeight) pdf.addPage();
+                                }
+                            } else {
+                                pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight);
+                            }
+
+                            pdf.save("tapping-report.pdf");
+                        };
+                    })
+                    .catch((error) => {
+                        console.error("Export error:", error);
+                    });
             });
         </script>
     @endif

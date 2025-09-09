@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TapperReportController extends Controller
 {
@@ -131,6 +132,40 @@ class TapperReportController extends Controller
                 ];
             });
 
+        // Ambil semua data pelatihan (teori dan praktek) yang terkait dengan NIK
+        $trainingData = DB::connection('mysql_lain')
+            ->table('trainings')
+            ->join('att_trainings', 'trainings.id_data', '=', 'att_trainings.id_training')
+            ->where('att_trainings.nik', $nik)
+            ->where('trainings.topic', 'like', '%Tapping Quality%')
+            ->orderBy('trainings.from_date', 'desc')
+            ->get();
+
+        // Pisahkan data teori dan praktek ke dalam koleksi terpisah
+        $teoriCollection   = $trainingData->where('place', 'Training Room');
+        $praktekCollection = $trainingData->where('place', 'Kebun');
+
+        // Buat array untuk menyimpan pasangan data yang sudah cocok
+        $pairedData = [];
+
+        foreach ($teoriCollection as $teori) {
+            // Tentukan rentang tanggal untuk mencari data praktek
+            $teoriDate = Carbon::parse($teori->from_date);
+            $startDate = $teoriDate->copy();
+            $endDate   = $teoriDate->copy()->addWeek(); // Tambahkan 1 minggu
+
+            // Cari data praktek yang berada dalam rentang tanggal tersebut
+            $praktek = $praktekCollection
+                ->whereBetween('from_date', [$startDate, $endDate])
+                ->first(); // Ambil data praktek pertama yang cocok
+
+            // Tambahkan pasangan data ke array
+            $pairedData[] = [
+                'teori'   => $teori,
+                'praktek' => $praktek, // Akan berisi null jika tidak ada data praktek yang cocok
+            ];
+        }
+
         return view('tapper-report.detail', [
             'title'              => 'Assessment History - ' . $tapperInfo->nama_penyadap,
             'tapperInfo'         => $tapperInfo,
@@ -138,6 +173,7 @@ class TapperReportController extends Controller
             'chartData'          => $chartData,
             'chartDataQueryRank' => $chartDataQueryRank,
             'filters'            => $request->only(['date_from', 'date_to']),
+            'pairedData'        => $pairedData,
         ]);
     }
 
@@ -395,11 +431,11 @@ class TapperReportController extends Controller
             ->first();
 
         return view('tapper-report.chart', [
-            'title'    => $title,
-            'nik'      => $nik,
+            'title'      => $title,
+            'nik'        => $nik,
             'tapperInfo' => $tapperInfo,
-            'itemSums' => $itemSums,
-            'filters'  => $request->only(['date_from', 'date_to']),
+            'itemSums'   => $itemSums,
+            'filters'    => $request->only(['date_from', 'date_to']),
         ]);
     }
 }

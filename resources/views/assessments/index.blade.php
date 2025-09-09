@@ -42,168 +42,256 @@
             </div>
         </div>
         <div class="p-1 overflow-x-auto mt-2">
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">No.</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Tanggal Inspeksi</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Dept</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">NIK Penyadap</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Nama Penyadap</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Status</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Kemandoran</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Blok</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Task</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Panel Sadap</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Status Kulit</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu kecil (BO) / Tidak Mengunakan Gagang Panjang (HO)"
-                                class="">1.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu sedang (BO)/Tidak Menggunakan Pisau sodhok(HO)"
-                                class="">1.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Luka kayu besar (BO)/Sadapan Tidak Disodhok (HO)"
-                                class="">1.3</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kedalaman sadap (normatif)" class="">2.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kedalaman sadap (kurang)" class="">2.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kedalaman sadap (terlalu dalam)" class="">2.3</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Irisan melampaui batas depan" class="">3.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Irisan melampaui batas belakang" class="">3.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Tidak ada sodokan" class="">3.3</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Tidak ada pethikan (V)" class="">3.4</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Tebal Tatal > 2mm (BO)/ >3mm(HO)" class="">3.5</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Bergelombang" class="">3.6</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Tidak ada tanda bulan" class="">3.7</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Sudut sadap > 30°(BO)/45° (HO)" class="">4.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Sudut sadap < 30°(BO)/45° (HO)" class="">4.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Pengambilan scrap Diambil" class="">5.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Pengambilan scrap Tidak Diambil" class="">5.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Peralatan tidak lengkap Talang" class="">6.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Peralatan tidak lengkap mangkok" class="">6.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Peralatan tidak lengkap Hanger" class="">6.3</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kebersihan alat Talang" class="">7.1</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kebersihan alat Mangkok" class="">7.2</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Kebersihan alat Ember" class="">7.3</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Pohon sehat tidak disadap" class="">8</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Hasil tidak dipungut" class="">9</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">
-                            <span data-tippy-content="Talang sadap mepet" class="">10</span>
-                        </th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Nilai</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Kelas Perawan</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Kelas Pulihan</th>
-                        <th class="px-4 py-0.5 text-left text-sm font-medium">Kelas NTA</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($assessments as $assessment)
-                        <tr class="border-b border-gray-200 {{ $loop->even ? 'bg-blue-100' : 'bg-white' }}">
-                            <td class="px-4 py-2">
-                                {{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}
-                            </td>
-                            <td class="px-4 py-2">
-                                {{ Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}</td>
-                            <td class="px-4 py-2">{{ $assessment->dept }}</td>
-                            <td class="px-4 py-2">{{ $assessment->nik_penyadap }}</td>
-                            <td class="px-4 py-2">{{ $assessment->nama_penyadap }}</td>
-                            <td class="px-4 py-2">{{ $assessment->status }}</td>
-                            <td class="px-4 py-2">{{ $assessment->kemandoran }}</td>
-                            <td class="px-4 py-2">{{ $assessment->blok }}</td>
-                            <td class="px-4 py-2">{{ $assessment->task }}</td>
-                            <td class="px-4 py-2">{{ $assessment->panel_sadap }}</td>
-                            <td class="px-4 py-2">{{ $assessment->jenis_kulit_pohon }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item1_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item1_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item1_3 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item2_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item2_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item2_3 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_3 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_4 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_5 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_6 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item3_7 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item4_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item4_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item5_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item5_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item6_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item6_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item6_3 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item7_1 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item7_2 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item7_3 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item8 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item9 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->item10 }}</td>
-                            <td class="px-4 py-2">{{ $assessment->nilai }}</td>
-                            <td class="px-4 py-2">
-                                {{ $assessment->kelas_perawan }}
-                            </td>
-                            <td class="px-4 py-2">
-                                {{ $assessment->kelas_pulihan }}
-                            </td>
-                            <td class="px-4 py-2">
-                                {{ $assessment->kelas_nta }}
-                            </td>
-
+            <div class="overflow-x-auto w-full rounded-lg shadow-xl">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            {{-- Add 'border-r border-blue-500' to each <th> element --}}
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                No.</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Tanggal Inspeksi</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Dept</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                NIK Penyadap</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Nama Penyadap</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Status</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Kemandoran</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Blok</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Task</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Panel Sadap</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Status Kulit</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                1.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                1.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                1.3</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                2.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                2.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                2.3</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.3</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.4</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.5</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.6</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                3.7</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                4.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                4.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                5.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                5.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                6.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                6.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                6.3</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                7.1</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                7.2</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                7.3</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                8</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                9</th>
+                            <th
+                                class="px-3 py-2 text-center text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                10</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Nilai</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Kelas Perawan</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap border-r border-blue-500">
+                                Kelas Pulihan</th>
+                            <th
+                                class="px-3 py-2 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap">
+                                Kelas NTA</th>
                         </tr>
-                    @endforeach
-
-
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($assessments as $assessment)
+                            <tr
+                                class="{{ $loop->even ? 'bg-blue-100' : 'bg-white' }} hover:bg-blue-50 transition duration-150">
+                                {{-- Add 'border-r border-gray-200' to each <td> element --}}
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ ($assessments->currentPage() - 1) * $assessments->perPage() + $loop->iteration }}
+                                </td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ Carbon\Carbon::parse($assessment->tgl_inspeksi)->format('d M Y') }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->dept }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->nik_penyadap }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->nama_penyadap }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->status }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->kemandoran }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->blok }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->task }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->panel_sadap }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->jenis_kulit_pohon }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item1_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item1_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item1_3 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item2_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item2_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item2_3 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_3 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_4 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_5 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_6 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item3_7 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item4_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item4_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item5_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item5_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item6_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item6_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item6_3 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item7_1 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item7_2 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item7_3 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item8 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item9 }}</td>
+                                <td
+                                    class="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->item10 }}</td>
+                                <td
+                                    class="px-3 py-2 whitespace-nowrap text-sm font-bold text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->nilai }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->kelas_perawan }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 border-r border-gray-200">
+                                    {{ $assessment->kelas_pulihan }}</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                                    {{ $assessment->kelas_nta }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Pagination Links -->

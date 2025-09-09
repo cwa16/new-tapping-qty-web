@@ -10,7 +10,7 @@ class AssessmentDetailController extends Controller
     public function index(Request $request)
     {
         // Get filter values
-        $filters = $request->only(['kemandoran', 'panel_sadap', 'dept', 'date_from', 'date_to']);
+        $filters = $request->only(['division','kemandoran', 'panel_sadap', 'dept', 'date_from', 'date_to']);
 
         // Get all assessment data grouped by kemandoran, panel_sadap, and individual kelas values
         $summaryByKemandoranPanel = [];
@@ -19,6 +19,14 @@ class AssessmentDetailController extends Controller
         $baseQuery = DB::table('assessments');
 
         // Apply filters if provided
+        if (!empty($filters['division']) && $filters['division'] == 1) {
+            $baseQuery->whereIn('dept', ['A', 'B', 'C']);
+        }
+
+        if (!empty($filters['division']) && $filters['division'] == 2) {
+            $baseQuery->whereIn('dept', ['D', 'E', 'F']);
+        }
+
         if (!empty($filters['kemandoran'])) {
             $baseQuery->where('kemandoran', 'LIKE', '%' . $filters['kemandoran'] . '%');
         }

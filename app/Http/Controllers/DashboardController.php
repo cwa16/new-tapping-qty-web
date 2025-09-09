@@ -26,13 +26,37 @@ class DashboardController extends Controller
             ->whereBetween('tgl_inspeksi', [now()->startOfMonth(), now()->endOfMonth()])
             ->max('nilai');
 
-        // dd($highestAssessmentScoreLastWeek);
+         // Mendefinisikan semua sub divisi yang akan ditampilkan.
+        $subDivisions = ['A', 'B', 'C', 'D', 'E', 'F'];
+        $tappingClassesData = [];
+
+        foreach ($subDivisions as $subDiv) {
+            // Mengambil data untuk setiap sub divisi.
+            // Sesuaikan kolom 'dept' atau 'kemandoran' jika perlu.
+            $dataForSubDiv =  DB::table('assessments')->where('dept', $subDiv)
+                // ->whereBetween('tgl_inspeksi', [now()->startOfMonth(), now()->endOfMonth()])
+                ->get();
+
+            // Mengelompokkan data berdasarkan 'kelas_perawan', 'kelas_pulihan', dsb.
+            $groupedData = [
+                'Class 1' => $dataForSubDiv->where('kelas_perawan', '1'),
+                'Class 2' => $dataForSubDiv->where('kelas_pulihan', '2'),
+                'Class 3' => $dataForSubDiv->where('kelas_nta', '3'),
+                'Class 4' => $dataForSubDiv->where('kelas_nta', '4'),
+                'Non'     => $dataForSubDiv->whereNull('kelas_perawan')
+                                        ->whereNull('kelas_pulihan')
+                                        ->whereNull('kelas_nta')
+            ];
+
+            $tappingClassesData['Sub Div ' . $subDiv] = $groupedData;
+        }
 
         return view('dashboard.index', [
             'title' => 'Dashboard',
             'tapperCount' => $tapperCount,
             'thisMonthAssessments' => $thisMonthAssessments,
-            'highestAssessmentScoreThisMonth' => $highestAssessmentScoreThisMonth
+            'highestAssessmentScoreThisMonth' => $highestAssessmentScoreThisMonth,
+            'allData' => $tappingClassesData
         ]);
     }
 }

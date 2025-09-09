@@ -2,7 +2,7 @@
     <div class="mx-2 mb-2 flex items-center space-x-2 justify-between">
         <div class="items-center flex space-x-2">
             <a href="{{ route('grafik-asesmen.index') }}">
-                <span class="text-base font-light text-gray-500 hover:text-gray-600">Grafik Asesmendsdsd</span>
+                <span class="text-base font-light text-gray-500 hover:text-gray-600">Grafik Asesmen</span>
             </a>
             <i class="ri-arrow-right-s-line text-2xl text-gray-400"></i>
             <span class="text-base font-light text-gray-500">Average Chart</span>

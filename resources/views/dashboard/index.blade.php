@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <!-- Highest Assessment Score This Month Card -->
+        {{-- <!-- Highest Assessment Score This Month Card -->
         <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
             <div class="flex items-center">
                 <div class="flex-1">
@@ -26,7 +26,7 @@
                     <i class="ri-file-list-3-line text-3xl text-green-500"></i>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Total Penyadap Card -->
         <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-purple-500">
@@ -41,5 +41,30 @@
                 </div>
             </div>
         </div>
+
+        @foreach ($allData as $subDivName => $classes)
+            <!-- Total Penyadap Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-purple-500">
+                <div class="flex items-center">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-gray-700">Tapping Class - {{ $subDivName }}</h3>
+                        <ul class="list-unstyled">
+                            <ul class="list-unstyled">
+                                @foreach ($classes as $className => $classData)
+                                    <li>
+                                        <strong>{{ $className }}:</strong>
+                                        <span>{{ $classData->count() }} orang</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <i class="ri-group-line text-3xl text-purple-500"></i>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </div>
 </x-app-layout>
